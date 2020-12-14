@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+
+
+export default function Apptest(props){
+  return(
+    <div>
+      <p>Hello from {props.name}</p>
+    </div>
+  )
+}
+
+ 
