@@ -3,6 +3,7 @@ import './App.css';
 import Header from './header';
 import Index from './index';
 import Footer from './footer';
+import {Product} from './Product';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <header className="App-header">
         <Header name="header.js"/>
         <Footer name="footer.js"/>
+        <Product name='bananas ' price='1$' description='Fresh bananas from Ecuador ' /> 
       </header>
     </div>
   );
