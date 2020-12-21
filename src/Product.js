@@ -8,11 +8,11 @@ class Product extends Component {
     
     render(){
         return(
-            <div>
+            <>
                 <Description description={this.props.description} />
                 <Name name={this.props.name}/>
                 <Price price={this.props.price}/>
-            </div>
+            </>
             
         )
     }

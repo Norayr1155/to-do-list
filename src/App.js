@@ -12,7 +12,7 @@ function App() {
       <header className="App-header">
         <Header name="header.js"/>
         <Footer name="footer.js"/>
-        <Product name='bananas ' price='1$' description='Fresh bananas from Ecuador ' /> 
+        <Product name='bananas ' price='12$' description='Fresh bananas from Ecuador ' /> 
       </header>
     </div>
   );
