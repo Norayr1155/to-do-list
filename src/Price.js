@@ -28,10 +28,10 @@ class Price extends Component{
     render(){
         
         return(
-            <div>
+            <>
             <span>{this.state.price} </span>
             <button onClick={this.changeCurrency} >change the currency</button>
-            </div>
+            </>
         )
     }
 }
