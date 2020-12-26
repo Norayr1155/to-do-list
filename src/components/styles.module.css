@@ -1,0 +1,38 @@
+.newTask{
+    padding-top: 4%;
+    padding-left: 2%;
+    
+}
+.tasks{
+    color: rgb(187, 3, 3);
+    font-size: 22px;
+    font-weight: 600;
+}
+.input{
+    width: 20%;
+    margin-right: 3%;
+    height: 23px;
+    border: 3px solid rgb(0, 0, 0);
+}
+.addTaskButton{
+    background-color: rgb(34, 204, 34);
+    width: 9%;
+    font-size: 20px;
+    border-radius: 6px;
+    margin-right: 3%;
+}
+.addTaskButton:hover{
+    background-color: indigo;
+    cursor: pointer;
+    color: white;
+}
+.removeTaskButton{
+    background-color: gold;
+    font-size: 20px;
+    border-radius: 6px;
+}
+.removeTaskButton:hover{
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}

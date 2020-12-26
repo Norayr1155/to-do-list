@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import Header from './header';
+import Header from './components/header';
 import Index from './index';
-import Footer from './footer';
-import {Product} from './Product';
-import {ToDoList} from './ToDoList';
+import Footer from './components/footer';
+import {Product} from './components/Product';
+import {ToDoList} from './components/ToDoList';
 
 
 
