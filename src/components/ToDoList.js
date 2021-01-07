@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './styles.module.css';
+import {Container,Row,Col,Button,FormControl,Div} from 'react-bootstrap';
 
 
 class ToDoList extends Component {
@@ -33,36 +34,49 @@ class ToDoList extends Component {
     render() {
         
         let newTask = this.state.task.map((el, index) => {
-        return <li 
-                key={index}>
+        return <Col 
+                key={index}
+                className={styles.tasks}
+                >
+                <div>  
                 {el}
                 <input type='checkbox'></input> 
-                </li>
+                </div>  
+                </Col> 
             
         });
         
         return (
-            <div className={styles.newTask}>
-                <input 
-                    className={styles.input}
-                    type='text'
-                    value={this.state.inputValue}
-                    onChange={this.addTask}
-                ></input>
-                <button
-                    className={styles.addTaskButton}
-                    onClick={this.handleClick}
-                >Add task</button>
-                <button
-                 className={styles.removeTaskButton}   
-                 onClick={this.removeTask}
-                >Remove Task</button>
-                <ol 
-                className={styles.tasks}
-                >
-                {newTask}
-                </ol>
-            </div>
+            <Container
+            className={styles.firstContainer}
+            >
+                <Row>
+                    <Col>
+                        <FormControl
+                        value={this.state.inputValue}
+                        onChange={this.addTask}
+                        type='text'
+                        className={styles.input}
+                        >
+                        </FormControl>
+                        <Button
+                        variant='secondary'
+                        onClick={this.handleClick}
+                        className={styles.addTaskButton}
+                        >
+                        ADD THE TASK   
+                        </Button>
+                        <Button
+                        variant='danger'>
+                        REMOVE THE TASK
+                        </Button>
+                    </Col>
+                </Row>
+                <Row>
+                    {newTask}
+                </Row>
+            
+            </Container>
         )
     }
 }

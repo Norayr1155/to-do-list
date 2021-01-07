@@ -5,6 +5,7 @@ import Index from './index';
 import Footer from './components/footer';
 import {Product} from './components/Product';
 import {ToDoList} from './components/ToDoList';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
