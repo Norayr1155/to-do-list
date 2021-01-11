@@ -31,7 +31,7 @@ class ToDoList extends Component {
         }
 
         this.setState({
-            tasks: [... this.state.tasks, newTask],
+            tasks: [...this.state.tasks, newTask],
             inputValue: ''
         });
     }
@@ -46,7 +46,7 @@ class ToDoList extends Component {
 
     selectTask=(taskId)=>{
         this.setState({
-            selectedTasks:[... this.state.selectedTasks, taskId]
+            selectedTasks:[...this.state.selectedTasks, taskId]
         })
     }
 
