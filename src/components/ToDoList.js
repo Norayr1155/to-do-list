@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import styles from './styles.module.css';
-import { Container, Row, Col, Button, FormControl,} from 'react-bootstrap';
-import idGenerator from './../helpers/idGenerator';
+import { Container, Row, Col, Button,} from 'react-bootstrap';
 import Task from './Task/Task';
 import NewTask from './NewTask/NewTask';
 
@@ -11,31 +9,13 @@ class ToDoList extends Component {
 
     state = {
         tasks: [],
-        inputValue: '',
         selectedTasks:new Set(),
     }
 
-
-    handleChange = (event) => {
-        this.setState({
-            inputValue: event.target.value,
-        });
-    }
-
-    addTask = () => {
-        const inputValue = this.state.inputValue.trim();
-        if (!inputValue) {
-            return;
-        }
-
-        const newTask = {
-            _id: idGenerator(),
-            title: inputValue
-        }
-
+    addTask = (newTask) => {
+        
         this.setState({
             tasks: [...this.state.tasks, newTask],
-            inputValue: ''
         });
     }
 
@@ -59,6 +39,7 @@ class ToDoList extends Component {
             selectedTasks:markedTasks
         });
     };
+
     deleteSelected=()=>{
         const {tasks}=this.state;
         const {selectedTasks}=this.state;
@@ -77,14 +58,8 @@ class ToDoList extends Component {
 
     };
 
-    handleKeyDown=(event)=>{
-        if(event.key==='Enter'){
-            this.addTask();
-        }
-    };
-
     render() {
-        const{tasks,inputValue,selectedTasks}=this.state;
+        const{tasks,selectedTasks}=this.state;
         let uniqueTask = tasks.map((taskObject) => {
             return <Col
                 key={taskObject._id}
@@ -111,10 +86,7 @@ class ToDoList extends Component {
                     <Col>
                     <h2>To Do List</h2>
                     <NewTask
-                    value={inputValue}
-                    onChange={this.handleChange}
-                    onClick={this.addTask}
-                    onKeyDown={this.handleKeyDown}
+                    onAdd={this.addTask}
                     disabledInput={!!selectedTasks.size}
                     disabledButton={!!selectedTasks.size}
 
@@ -133,7 +105,7 @@ class ToDoList extends Component {
                 </Row>
 
             </Container>
-        )
+        );
     }
 }
 
