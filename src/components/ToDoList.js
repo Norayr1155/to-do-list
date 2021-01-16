@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button,} from 'react-bootstrap';
 import Task from './Task/Task';
 import NewTask from './NewTask/NewTask';
+import Confirm from '../components/Confirm';
 
 
 
@@ -10,6 +11,7 @@ class ToDoList extends Component {
     state = {
         tasks: [],
         selectedTasks:new Set(),
+        showConfirm:false
     }
 
     addTask = (newTask) => {
@@ -54,12 +56,21 @@ class ToDoList extends Component {
         this.setState({
             tasks:newTasks,
             selectedTasks:new Set(),
+            showConfirm:false
+
+
         });
 
     };
 
+    toggleConfirm=()=>{
+        this.setState({
+            showConfirm:!this.state.showConfirm
+        });
+    };
+
     render() {
-        const{tasks,selectedTasks}=this.state;
+        const{tasks,selectedTasks,showConfirm}=this.state;
         let uniqueTask = tasks.map((taskObject) => {
             return <Col
                 key={taskObject._id}
@@ -93,7 +104,7 @@ class ToDoList extends Component {
                     />
                         <Button
                             variant='danger'
-                            onClick={this.deleteSelected}
+                            onClick={this.toggleConfirm}
                             disabled={!selectedTasks.size}
                             >
                             REMOVE SELECTED
@@ -103,8 +114,15 @@ class ToDoList extends Component {
                 <Row>
                     {uniqueTask}
                 </Row>
-
+                {showConfirm && 
+                <Confirm
+                onClose={this.toggleConfirm}
+                onConfirm={this.deleteSelected}
+                count={selectedTasks.size}
+                />
+                }
             </Container>
+            
         );
     }
 }
