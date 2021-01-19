@@ -11,13 +11,18 @@ class ToDoList extends Component {
     state = {
         tasks: [],
         selectedTasks:new Set(),
-        showConfirm:false
+        showConfirm:false,
+        openNewTaskModal:false,
+        editedTask:''
+
     }
 
     addTask = (newTask) => {
         
         this.setState({
             tasks: [...this.state.tasks, newTask],
+            openNewTaskModal:false
+
         });
     }
 
@@ -27,6 +32,7 @@ class ToDoList extends Component {
        this.setState({
            tasks:newTasks
        });
+
     }
 
     selectTask=(taskId)=>{
@@ -57,8 +63,6 @@ class ToDoList extends Component {
             tasks:newTasks,
             selectedTasks:new Set(),
             showConfirm:false
-
-
         });
 
     };
@@ -69,8 +73,41 @@ class ToDoList extends Component {
         });
     };
 
+    selectAll=()=>{
+        const taskIds=this.state.tasks.map((task)=>task._id);
+        this.setState({
+            selectedTasks:new Set(taskIds)
+        });
+    };
+
+    unselectAll=()=>{
+        this.setState({
+            selectedTasks:new Set()
+        });
+    };
+
+    togglenewTaskModal=()=>{
+        this.setState({
+            openNewTaskModal:!this.state.openNewTaskModal
+        });
+    };
+
+    toggleEditTaskModal=(taskObject)=>{
+        this.setState({
+            editedTask:taskObject
+        });
+
+        if(!this.state.editedTask){
+            this.setState({
+                openNewTaskModal:!this.state.openNewTaskModal
+            });
+        }
+    };
+
     render() {
-        const{tasks,selectedTasks,showConfirm}=this.state;
+
+        const{tasks,selectedTasks,showConfirm,openNewTaskModal}=this.state;
+        
         let uniqueTask = tasks.map((taskObject) => {
             return <Col
                 key={taskObject._id}
@@ -85,6 +122,9 @@ class ToDoList extends Component {
                 onToggle={this.selectTask}
                 onDelete={this.removeTask}
                 disabled={!!selectedTasks.size}
+                selected={selectedTasks.has(taskObject._id)}
+                onEdit={()=>this.toggleEditTaskModal(taskObject)}
+                changed={this.state.editedTask}
                 />
             </Col>
 
@@ -96,18 +136,36 @@ class ToDoList extends Component {
                 <Row>
                     <Col>
                     <h2>To Do List</h2>
-                    <NewTask
-                    onAdd={this.addTask}
-                    disabledInput={!!selectedTasks.size}
-                    disabledButton={!!selectedTasks.size}
+                    
+                        <Button
+                            variant='primary'
+                            onClick={this.togglenewTaskModal}
+                            disabled={!!selectedTasks.size}
+                            className='mr-3'
+                            >
+                            Add new task
+                        </Button>
+                        <Button
+                            variant='warning'
+                            onClick={this.selectAll}
+                            className='mr-3'
+                            >
+                            Select all
+                        </Button>
 
-                    />
+                        <Button
+                            variant='success'
+                            onClick={this.unselectAll}
+                            className='mr-3'
+                            >
+                            Unselect all
+                        </Button>
                         <Button
                             variant='danger'
                             onClick={this.toggleConfirm}
                             disabled={!selectedTasks.size}
                             >
-                            REMOVE SELECTED
+                            Delete selected
                         </Button>
                     </Col>
                 </Row>
@@ -121,6 +179,14 @@ class ToDoList extends Component {
                 count={selectedTasks.size}
                 />
                 }
+                {
+                  openNewTaskModal &&
+                  <NewTask
+                  onAdd={this.addTask}
+                  onClose={this.togglenewTaskModal}
+                  />
+                }
+                
             </Container>
             
         );
