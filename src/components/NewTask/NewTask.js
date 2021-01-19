@@ -46,7 +46,7 @@ export default class NewTask extends Component{
 
     render(){
         const{disabledInput,disabledButton}=this.props;
-        const{title,description}=this.state;
+        const{title}=this.state;
         
         return(
             <>
