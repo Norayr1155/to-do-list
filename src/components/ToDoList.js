@@ -1,81 +1,157 @@
 import React, { Component } from 'react';
 import styles from './styles.module.css';
-import {Container,Row,Col,Button,FormControl,Div} from 'react-bootstrap';
+import { Container, Row, Col, Button, FormControl, Card } from 'react-bootstrap';
+import idGenerator from './../helpers/idGenerator';
 
 
 class ToDoList extends Component {
 
     state = {
-        task: ['It is the first task'],
+        tasks: [],
         inputValue: '',
+        selectedTasks:new Set(),
     }
 
-    idGenerator=()=>{
-        return Math.random().toString(32).slice(2)+'-'+Math.random().toString(32).slice(2);
-    }
 
-    addTask = (event) => {
+    handleChange = (event) => {
         this.setState({
             inputValue: event.target.value,
         });
     }
 
-    handleClick = () => {
-        const inputValue=this.state.inputValue.trim();
-        if(!inputValue){
+    addTask = () => {
+        const inputValue = this.state.inputValue.trim();
+        if (!inputValue) {
             return;
         }
+
+        const newTask = {
+            _id: idGenerator(),
+            title: inputValue
+        }
+
         this.setState({
-            task: [... this.state.task, this.state.inputValue],
+            tasks: [...this.state.tasks, newTask],
             inputValue: ''
         });
     }
-    
-    render() {
-        
-        let newTask = this.state.task.map((el, index) => {
-        return <Col 
-                key={index}
-                className={styles.tasks}
-                >
-                <div>  
-                {el}
-                <input type='checkbox'></input> 
-                </div>  
-                </Col> 
-            
+
+    removeTask=(taskId)=>{
+       const newTasks=this.state.tasks.filter((el)=> taskId!==el._id);
+
+       this.setState({
+           tasks:newTasks
+       });
+    }
+
+    selectTask=(taskId)=>{
+        const markedTasks=new Set(this.state.selectedTasks);
+        if(markedTasks.has(taskId)){
+            markedTasks.delete(taskId);
+        }
+        else{
+            markedTasks.add(taskId);
+        }
+        this.setState({
+            selectedTasks:markedTasks
         });
-        
+    };
+    deleteSelected=()=>{
+        const {tasks}=this.state;
+        const {selectedTasks}=this.state;
+
+        const newTasks =tasks.filter((task)=>{
+            if(selectedTasks.has(task._id)){
+                return false;
+            }
+            return true;
+        });
+
+        this.setState({
+            tasks:newTasks,
+            selectedTasks:new Set(),
+        });
+
+    };
+
+    handleKeyDown=(event)=>{
+        if(event.key==='Enter'){
+            this.addTask();
+        }
+    };
+
+    render() {
+        const{tasks,inputValue,selectedTasks}=this.state;
+        let uniqueTask = tasks.map((el) => {
+            return <Col
+                key={el._id}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={2}
+                >
+                <Card className={styles.task}>
+                    <Card.Body>
+                        <input 
+                        type='checkbox'
+                        onChange={()=>this.selectTask(el._id)}
+                        >
+                        </input>
+                        <Card.Title>{el.title}</Card.Title>
+                        <Card.Text>
+                        This is new and unique task !!!
+                        </Card.Text>
+                        <Button 
+                        variant="danger"
+                        onClick={()=>this.removeTask(el._id)}
+                        disabled={!!selectedTasks.size}
+                        >
+                        Delete</Button>
+
+                    </Card.Body>
+                </Card>
+            </Col>
+
+        });
+
         return (
             <Container
-            className={styles.firstContainer}
             >
                 <Row>
                     <Col>
+                    <h2>To Do List</h2>
+
                         <FormControl
-                        value={this.state.inputValue}
-                        onChange={this.addTask}
-                        type='text'
-                        className={styles.input}
+                            value={inputValue}
+                            onChange={this.handleChange}
+                            type='text'
+                            className={styles.input}
+                            disabled={!!selectedTasks.size}
+                            onKeyDown={this.handleKeyDown}
                         >
                         </FormControl>
                         <Button
-                        variant='secondary'
-                        onClick={this.handleClick}
-                        className={styles.addTaskButton}
+                            variant='secondary'
+                            onClick={this.addTask}
+                            className={styles.addTaskButton}
+                            disabled={!!selectedTasks.size}
                         >
-                        ADD THE TASK   
+                            ADD THE TASK
                         </Button>
                         <Button
-                        variant='danger'>
-                        REMOVE THE TASK
+                            variant='danger'
+                            onClick={this.deleteSelected}
+                            disabled={!selectedTasks.size}
+                            >
+                            REMOVE SELECTED
                         </Button>
                     </Col>
                 </Row>
                 <Row>
-                    {newTask}
+                    {uniqueTask}
                 </Row>
-            
+
             </Container>
         )
     }
