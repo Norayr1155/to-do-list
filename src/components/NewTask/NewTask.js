@@ -42,22 +42,21 @@ export default class NewTask extends Component {
 
     };
 
-    render() {
+    render(){
         const{onClose}=this.props;
-
-        return (
+        
+        return(
             
-
                 <Modal
                     show={true}
                     onHide={onClose}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-                >
+                    >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Add new task
+                            Add
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -80,7 +79,7 @@ export default class NewTask extends Component {
                     <Modal.Footer>
                     <Button
                         onClick={this.handleSubmit}
-                        ariant='danger'
+                        variant='danger'
                     >
                     Add
                     </Button>
@@ -92,7 +91,7 @@ export default class NewTask extends Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-
+                
 
         );
     }

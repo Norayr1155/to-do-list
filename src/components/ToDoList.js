@@ -143,7 +143,7 @@ class ToDoList extends Component {
                             disabled={!!selectedTasks.size}
                             className='mr-3'
                             >
-                            Add new task
+                            Add 
                         </Button>
                         <Button
                             variant='warning'
@@ -157,6 +157,7 @@ class ToDoList extends Component {
                             variant='success'
                             onClick={this.unselectAll}
                             className='mr-3'
+                            disabled={!selectedTasks.size}
                             >
                             Unselect all
                         </Button>
