@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button,FormControl} from 'react-bootstrap';
 import styles from './newTaskStyle.module.css';
 import idGenerator from '../../helpers/idGenerator';
+import PropTypes from 'prop-types';
+
 
 export default class NewTask extends Component{
 
@@ -72,3 +74,9 @@ export default class NewTask extends Component{
         );
     }
 }
+
+NewTask.propTypes={
+    onAdd:PropTypes.func.isRequired,
+    disabledInput:PropTypes.bool.isRequired,
+    disabledButton:PropTypes.bool.isRequired
+};

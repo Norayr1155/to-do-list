@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import {Button,Card} from 'react-bootstrap';
 import styles from './taskStyle.module.css';
+import PropTypes from 'prop-types';
 
 export default class Task extends Component{
 
+    static propTypes={
+        data:PropTypes.object.isRequired,
+        onToggle:PropTypes.func.isRequired,
+        onDelete:PropTypes.func.isRequired,
+        disabled:PropTypes.bool.isRequired
+    };
+
     state={
         selected:false
-    }
+    };
 
     handleChange=()=>{
         const{data,onToggle}=this.props;
