@@ -1,30 +1,30 @@
-import React, {Component} from 'react';
-import {Button,FormControl} from 'react-bootstrap';
-import styles from './newTaskStyle.module.css';
+import React, { Component } from 'react';
+import { Button, FormControl, Modal } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 
 
-export default class NewTask extends Component{
+export default class NewTask extends Component {
 
-    state={
-        title:'',
-        description:''
+    state = {
+        title: '',
+        description: ''
     }
 
     handleChange = (event) => {
+        const {name,value}=event.target;
         this.setState({
-            title: event.target.value,
+            [name]: value
         });
     };
 
-    handleKeyDown=(event)=>{
-        if(event.key==='Enter'){
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
             this.handleSubmit();
         }
     };
 
-    handleSubmit=()=>{
+    handleSubmit = () => {
         const title = this.state.title.trim();
         const description = this.state.description.trim();
 
@@ -40,43 +40,65 @@ export default class NewTask extends Component{
 
         this.props.onAdd(newTask);
 
-        this.setState({
-            title:'',
-            description:''
-        });
     };
 
     render(){
-        const{disabledInput,disabledButton}=this.props;
-        const{title}=this.state;
+        const{onClose}=this.props;
         
         return(
-            <>
-                <FormControl
-                            value={title}
-                            onChange={this.handleChange}
-                            placeholder='Title'
-                            className={styles.input}
-                            disabled={disabledInput}
-                            onKeyDown={this.handleKeyDown}
-                        >
-                        </FormControl>
-                        <Button
-                            variant='secondary'
-                            onClick={this.handleSubmit}
-                            className={styles.addTaskButton}
-                            disabled={disabledButton}
-                        >
-                            ADD THE TASK
-                        </Button>
-            </>
             
+                <Modal
+                    show={true}
+                    onHide={onClose}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Add
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
+                    <FormControl
+                    onChange={this.handleChange}
+                    placeholder='Title'
+                    onKeyPress={this.handleKeyDown}
+                    className='mb-3'
+                    name='title'
+                    />
+                    <FormControl 
+                    as='textarea' 
+                    rows={5}
+                    placeholder='Description'
+                    onChange={this.handleChange}
+                    name='description'
+                    />                   
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button
+                        onClick={this.handleSubmit}
+                        variant='danger'
+                    >
+                    Add
+                    </Button>
+                    <Button
+                        onClick={onClose}
+                        variant='warning'
+                    >
+                    Cancel
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+                
+
         );
     }
 }
 
-NewTask.propTypes={
-    onAdd:PropTypes.func.isRequired,
-    disabledInput:PropTypes.bool.isRequired,
-    disabledButton:PropTypes.bool.isRequired
+NewTask.propTypes = {
+    onAdd: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+
 };

@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Button,Card} from 'react-bootstrap';
 import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash,faEdit } from '@fortawesome/free-solid-svg-icons'
+
 
 export default class Task extends Component{
 
@@ -9,44 +12,54 @@ export default class Task extends Component{
         data:PropTypes.object.isRequired,
         onToggle:PropTypes.func.isRequired,
         onDelete:PropTypes.func.isRequired,
-        disabled:PropTypes.bool.isRequired
-    };
+        disabled:PropTypes.bool.isRequired,
+        selected:PropTypes.bool.isRequired
 
-    state={
-        selected:false
     };
 
     handleChange=()=>{
         const{data,onToggle}=this.props;
         onToggle(data._id);
-        this.setState({
-            selected:!this.state.selected,
-        })
-
-    }
+    };
+    
+    editTask=(changedtask)=>{
+        this.props.onEdit();
+    };
 
     render(){
-        const taskObject = this.props.data;
-        const {onDelete,disabled}=this.props;
-        const {selected}=this.state;
+        
+        let taskObject = this.props.data;
+        const {onDelete,disabled,selected}=this.props;
         return(
             <Card className={`${styles.task} ${selected?styles.selectedTask:""}`}>
                     <Card.Body>
                         <input 
                         type='checkbox'
                         onChange={this.handleChange}
+                        checked={selected}
                         >
                         </input>
                         <Card.Title>{taskObject.title}</Card.Title>
                         <Card.Text>
-                        This is new and unique task !!!
+                        {taskObject.description}
                         </Card.Text>
+                        
+                        <Button 
+                        variant="success"
+                        onClick={()=>this.editTask(this.props.changed)}
+                        disabled={disabled}
+                        className='mr-2'
+                        >
+                        <FontAwesomeIcon icon={faEdit} />
+                        </Button>
+
                         <Button 
                         variant="danger"
                         onClick={()=>onDelete(taskObject._id)}
                         disabled={disabled}
                         >
-                        Delete</Button>
+                        <FontAwesomeIcon icon={faTrash} />
+                        </Button>
 
                     </Card.Body>
                 </Card>
