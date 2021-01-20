@@ -1,43 +1,26 @@
 import React, { Component } from 'react';
-import styles from './styles.module.css';
-import { Container, Row, Col, Button, FormControl, Card } from 'react-bootstrap';
-import idGenerator from './../helpers/idGenerator';
+import { Container, Row, Col, Button,} from 'react-bootstrap';
+import Task from './Task/Task';
+import NewTask from './NewTask/NewTask';
+
 
 
 class ToDoList extends Component {
 
     state = {
         tasks: [],
-        inputValue: '',
         selectedTasks:new Set(),
     }
 
-
-    handleChange = (event) => {
-        this.setState({
-            inputValue: event.target.value,
-        });
-    }
-
-    addTask = () => {
-        const inputValue = this.state.inputValue.trim();
-        if (!inputValue) {
-            return;
-        }
-
-        const newTask = {
-            _id: idGenerator(),
-            title: inputValue
-        }
-
+    addTask = (newTask) => {
+        
         this.setState({
             tasks: [...this.state.tasks, newTask],
-            inputValue: ''
         });
     }
 
     removeTask=(taskId)=>{
-       const newTasks=this.state.tasks.filter((el)=> taskId!==el._id);
+       const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id);
 
        this.setState({
            tasks:newTasks
@@ -56,6 +39,7 @@ class ToDoList extends Component {
             selectedTasks:markedTasks
         });
     };
+
     deleteSelected=()=>{
         const {tasks}=this.state;
         const {selectedTasks}=this.state;
@@ -74,43 +58,23 @@ class ToDoList extends Component {
 
     };
 
-    handleKeyDown=(event)=>{
-        if(event.key==='Enter'){
-            this.addTask();
-        }
-    };
-
     render() {
-        const{tasks,inputValue,selectedTasks}=this.state;
-        let uniqueTask = tasks.map((el) => {
+        const{tasks,selectedTasks}=this.state;
+        let uniqueTask = tasks.map((taskObject) => {
             return <Col
-                key={el._id}
+                key={taskObject._id}
                 xs={12}
                 sm={6}
                 md={4}
                 lg={3}
                 xl={2}
                 >
-                <Card className={styles.task}>
-                    <Card.Body>
-                        <input 
-                        type='checkbox'
-                        onChange={()=>this.selectTask(el._id)}
-                        >
-                        </input>
-                        <Card.Title>{el.title}</Card.Title>
-                        <Card.Text>
-                        This is new and unique task !!!
-                        </Card.Text>
-                        <Button 
-                        variant="danger"
-                        onClick={()=>this.removeTask(el._id)}
-                        disabled={!!selectedTasks.size}
-                        >
-                        Delete</Button>
-
-                    </Card.Body>
-                </Card>
+                <Task 
+                data={taskObject}
+                onToggle={this.selectTask}
+                onDelete={this.removeTask}
+                disabled={!!selectedTasks.size}
+                />
             </Col>
 
         });
@@ -121,24 +85,12 @@ class ToDoList extends Component {
                 <Row>
                     <Col>
                     <h2>To Do List</h2>
+                    <NewTask
+                    onAdd={this.addTask}
+                    disabledInput={!!selectedTasks.size}
+                    disabledButton={!!selectedTasks.size}
 
-                        <FormControl
-                            value={inputValue}
-                            onChange={this.handleChange}
-                            type='text'
-                            className={styles.input}
-                            disabled={!!selectedTasks.size}
-                            onKeyDown={this.handleKeyDown}
-                        >
-                        </FormControl>
-                        <Button
-                            variant='secondary'
-                            onClick={this.addTask}
-                            className={styles.addTaskButton}
-                            disabled={!!selectedTasks.size}
-                        >
-                            ADD THE TASK
-                        </Button>
+                    />
                         <Button
                             variant='danger'
                             onClick={this.deleteSelected}
@@ -153,7 +105,7 @@ class ToDoList extends Component {
                 </Row>
 
             </Container>
-        )
+        );
     }
 }
 
