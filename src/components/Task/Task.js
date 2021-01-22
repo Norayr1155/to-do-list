@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Button,Card} from 'react-bootstrap';
 import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash,faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
-export default class Task extends Component{
+export default class Task extends PureComponent{
 
     static propTypes={
         data:PropTypes.object.isRequired,
