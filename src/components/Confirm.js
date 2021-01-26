@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Modal,Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
@@ -41,4 +41,4 @@ Confirm.propTypes={
     count:PropTypes.number.isRequired
 }
 
-export default memo(Confirm);
+export default Confirm;
