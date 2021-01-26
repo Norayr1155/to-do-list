@@ -3,6 +3,8 @@ import { Container, Row, Col, Button,} from 'react-bootstrap';
 import Task from './Task/Task';
 import NewTask from './NewTask/NewTask';
 import Confirm from '../components/Confirm';
+import EditTaskModal from './EditTaskModal';
+import styles from './styles.module.css';
 
 
 
@@ -13,7 +15,7 @@ class ToDoList extends Component {
         selectedTasks:new Set(),
         showConfirm:false,
         openNewTaskModal:false,
-        editedTask:''
+        editTask:null
 
     }
 
@@ -92,21 +94,25 @@ class ToDoList extends Component {
         });
     };
 
-    toggleEditTaskModal=(taskObject)=>{
+    handleEdit=(editTask)=>{
         this.setState({
-            editedTask:taskObject
+            editTask
         });
-
-        if(!this.state.editedTask){
-            this.setState({
-                openNewTaskModal:!this.state.openNewTaskModal
-            });
-        }
     };
+
+    handleSaveTask=(editedTask)=>{
+        const tasks=[...this.state.tasks];
+        const foundIndex=tasks.findIndex((task)=> task._id===editedTask._id);
+        tasks[foundIndex]=editedTask;
+        this.setState({
+            tasks,
+            editTask:null
+        });
+    }
 
     render() {
 
-        const{tasks,selectedTasks,showConfirm,openNewTaskModal}=this.state;
+        const{tasks,selectedTasks,showConfirm,openNewTaskModal,editTask}=this.state;
         
         let uniqueTask = tasks.map((taskObject) => {
             return <Col
@@ -123,8 +129,7 @@ class ToDoList extends Component {
                 onDelete={this.removeTask}
                 disabled={!!selectedTasks.size}
                 selected={selectedTasks.has(taskObject._id)}
-                onEdit={()=>this.toggleEditTaskModal(taskObject)}
-                changed={this.state.editedTask}
+                onEdit={this.handleEdit}
                 />
             </Col>
 
@@ -135,20 +140,20 @@ class ToDoList extends Component {
             >
                 <Row>
                     <Col>
-                    <h2>To Do List</h2>
+                    <h2 className={styles.title}>To Do List</h2>
                     
                         <Button
                             variant='primary'
                             onClick={this.togglenewTaskModal}
                             disabled={!!selectedTasks.size}
-                            className='mr-3'
+                            className='mr-3 mt-2' 
                             >
                             Add 
                         </Button>
                         <Button
                             variant='warning'
                             onClick={this.selectAll}
-                            className='mr-3'
+                            className='mr-3 mt-2' 
                             >
                             Select all
                         </Button>
@@ -156,7 +161,7 @@ class ToDoList extends Component {
                         <Button
                             variant='success'
                             onClick={this.unselectAll}
-                            className='mr-3'
+                            className='mr-3 mt-2' 
                             disabled={!selectedTasks.size}
                             >
                             Unselect all
@@ -165,6 +170,7 @@ class ToDoList extends Component {
                             variant='danger'
                             onClick={this.toggleConfirm}
                             disabled={!selectedTasks.size}
+                            className='mt-2' 
                             >
                             Delete selected
                         </Button>
@@ -186,6 +192,13 @@ class ToDoList extends Component {
                   onAdd={this.addTask}
                   onClose={this.togglenewTaskModal}
                   />
+                }
+                {editTask &&
+                    <EditTaskModal
+                        data={editTask}
+                        onClose={()=>this.handleEdit(null)}
+                        onSave={this.handleSaveTask}
+                    />
                 }
                 
             </Container>

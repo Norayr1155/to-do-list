@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 
 
 export default class NewTask extends Component {
+    
+    constructor(props){
+        super(props);
+        this.state={
+            ...props.data
+        };
+    };
 
     state = {
         title: '',
@@ -31,19 +37,16 @@ export default class NewTask extends Component {
         if (!title) {
             return;
         }
-
-        const newTask = {
-            _id: idGenerator(),
+        this.props.onSave({
+            _id:this.state._id,
             title,
             description
-        };
-
-        this.props.onAdd(newTask);
-
+        });
     };
 
     render(){
         const{onClose}=this.props;
+        const{title,description}=this.state;
         
         return(
             
@@ -56,7 +59,7 @@ export default class NewTask extends Component {
                     >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Add new task
+                            Edit Task
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -67,6 +70,7 @@ export default class NewTask extends Component {
                     onKeyPress={this.handleKeyDown}
                     className='mb-3'
                     name='title'
+                    value={title}
                     />
                     <FormControl 
                     as='textarea' 
@@ -74,6 +78,7 @@ export default class NewTask extends Component {
                     placeholder='Description'
                     onChange={this.handleChange}
                     name='description'
+                    value={description}
                     />                   
                     </Modal.Body>
                     <Modal.Footer>
@@ -81,7 +86,7 @@ export default class NewTask extends Component {
                         onClick={this.handleSubmit}
                         variant='danger'
                     >
-                    Add
+                    Save
                     </Button>
                     <Button
                         onClick={onClose}
@@ -98,7 +103,8 @@ export default class NewTask extends Component {
 }
 
 NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    data:PropTypes.object.isRequired
 
 };

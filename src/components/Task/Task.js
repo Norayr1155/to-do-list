@@ -22,14 +22,11 @@ export default class Task extends Component{
         onToggle(data._id);
     };
     
-    editTask=(changedtask)=>{
-        this.props.onEdit();
-    };
-
+    
     render(){
         
-        let taskObject = this.props.data;
-        const {onDelete,disabled,selected}=this.props;
+        const taskObject = this.props.data;
+        const {onDelete,disabled,selected,onEdit}=this.props;
         return(
             <Card className={`${styles.task} ${selected?styles.selectedTask:""}`}>
                     <Card.Body>
@@ -46,7 +43,7 @@ export default class Task extends Component{
                         
                         <Button 
                         variant="success"
-                        onClick={()=>this.editTask(this.props.changed)}
+                        onClick={()=>onEdit(taskObject)}
                         disabled={disabled}
                         className='mr-2'
                         >
