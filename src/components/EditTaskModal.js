@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 

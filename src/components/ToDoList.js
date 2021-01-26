@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { Container, Row, Col, Button,} from 'react-bootstrap';
 import Task from './Task/Task';
 import NewTask from './NewTask/NewTask';
 import Confirm from '../components/Confirm';
 import EditTaskModal from './EditTaskModal';
 import styles from './styles.module.css';
-
 
 
 class ToDoList extends Component {
