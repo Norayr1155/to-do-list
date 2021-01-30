@@ -18,21 +18,97 @@ class ToDoList extends Component {
 
     }
 
-    addTask = (newTask) => {
-        
-        this.setState({
-            tasks: [...this.state.tasks, newTask],
-            openNewTaskModal:false
+    componentDidMount(){
+        fetch('http://localhost:3001/task', {
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+            
+        })
+        .then(async(response)=>{
+            const res = await response.json();
 
-        });
+            if(response.status>=400 && response.status<600){
+                if(res.error){
+                    throw res.error
+                }
+                else{
+                    throw new Error('Something was wrong')
+                }
+            }
+            this.setState({
+                tasks: res,
+            });
+        })
+        .catch((error)=>{
+            console.log('Error catched',error);
+        }) 
+    }
+
+    addTask = (newTask) => {
+
+        fetch('http://localhost:3001/task', {
+            method:'POST',
+            body:JSON.stringify(newTask),
+            headers:{
+                'Content-Type':'application/json'
+            }
+            
+        })
+        .then(async(response)=>{
+            const res = await response.json();
+
+            if(response.status>=400 && response.status<600){
+                if(res.error){
+                    throw res.error
+                }
+                else{
+                    throw new Error('Something was wrong')
+                }
+            }
+            this.setState({
+                tasks: [...this.state.tasks, res],
+                openNewTaskModal:false
+                });
+        })
+        .catch((error)=>{
+            console.log('Error catched',error);
+        })
+        
+        
+        
     }
 
     removeTask=(taskId)=>{
-       const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id);
 
-       this.setState({
-           tasks:newTasks
-       });
+        fetch(`http://localhost:3001/task/${taskId}`, {
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json'
+            }
+            
+        })
+        .then(async(response)=>{
+            const res = await response.json();
+
+            if(response.status>=400 && response.status<600){
+                if(res.error){
+                    throw res.error
+                }
+                else{
+                    throw new Error('Something was wrong')
+                }
+            }
+            const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id);
+
+            this.setState({
+            tasks:newTasks
+            });
+        })
+        .catch((error)=>{
+            console.log('Error catched',error);
+        });
 
     }
 
@@ -50,20 +126,45 @@ class ToDoList extends Component {
     };
 
     deleteSelected=()=>{
-        const {tasks}=this.state;
-        const {selectedTasks}=this.state;
+        const {tasks,selectedTasks}=this.state;
+        const arrFromSelectedTasks=[...selectedTasks];
 
-        const newTasks =tasks.filter((task)=>{
-            if(selectedTasks.has(task._id)){
-                return false;
+        fetch('http://localhost:3001/task', {
+            method:'PATCH',
+            body:JSON.stringify({tasks:arrFromSelectedTasks}),
+            headers:{
+                'Content-Type':'application/json'
             }
-            return true;
-        });
+            
+        })
+        .then(async(response)=>{
+            const res = await response.json();
 
-        this.setState({
-            tasks:newTasks,
-            selectedTasks:new Set(),
-            showConfirm:false
+            if(response.status>=400 && response.status<600){
+                if(res.error){
+                    throw res.error
+                }
+                else{
+                    throw new Error('Something was wrong')
+                }
+            }
+
+            const newTasks =tasks.filter((task)=>{
+                if(selectedTasks.has(task._id)){
+                return false;
+                }
+                return true;
+            });
+
+            this.setState({
+                tasks:newTasks,
+                selectedTasks:new Set(),
+                showConfirm:false
+            });
+
+        })
+        .catch((error)=>{
+            console.log('Error catched',error);
         });
 
     };
@@ -94,9 +195,37 @@ class ToDoList extends Component {
     };
 
     handleEdit=(editTask)=>{
-        this.setState({
-            editTask
-        });
+
+        fetch(`http://localhost:3001/task/${editTask._id}`, {
+            method:'PUT',
+            body:JSON.stringify(editTask),
+            headers:{
+                'Content-Type':'application/json'
+            }
+            
+        })
+        .then(async(response)=>{
+            const res = await response.json();
+
+            if(response.status>=400 && response.status<600){
+                if(res.error){
+                    throw res.error
+                }
+                else{
+                    throw new Error('Something was wrong')
+                }
+            }
+            
+            this.setState({
+                editTask
+            });
+
+        })
+        .catch((error)=>{
+            console.log('Error catched',error);
+        })
+
+        
     };
 
     handleSaveTask=(editedTask)=>{
