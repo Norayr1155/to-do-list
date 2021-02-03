@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash,faEdit } from '@fortawesome/free-solid-svg-icons';
 import {formatDate} from '../../helpers/utils';
+import {Link} from 'react-router-dom';
 
 
 export default class Task extends PureComponent{
@@ -37,7 +38,9 @@ export default class Task extends PureComponent{
                         checked={selected}
                         >
                         </input>
-                        <Card.Title>{taskObject.title}</Card.Title>
+                        <Link to='/task'>
+                          <Card.Title>{taskObject.title}</Card.Title>
+                        </Link>
                         <Card.Text>
                         Description:{taskObject.description}
                         </Card.Text>
