@@ -4,7 +4,7 @@ import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash,faEdit } from '@fortawesome/free-solid-svg-icons';
-import {formatDate} from '../../helpers/utils';
+import {formatDate,textTruncate} from '../../helpers/utils';
 import {Link} from 'react-router-dom';
 
 
@@ -38,11 +38,11 @@ export default class Task extends PureComponent{
                         checked={selected}
                         >
                         </input>
-                        <Link to='/task'>
+                        <Link to={`/task/${taskObject._id}`}>
                           <Card.Title>{taskObject.title}</Card.Title>
                         </Link>
                         <Card.Text>
-                        Description:{taskObject.description}
+                        Description:{textTruncate(taskObject.description)}
                         </Card.Text>
                         <Card.Text>   
                         Date: {formatDate(taskObject.date)}
