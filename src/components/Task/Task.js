@@ -39,10 +39,10 @@ export default class Task extends PureComponent{
                         >
                         </input>
                         <Link to={`/task/${taskObject._id}`}>
-                          <Card.Title>{taskObject.title}</Card.Title>
+                          <Card.Title>{textTruncate(taskObject.title,25)}</Card.Title>
                         </Link>
                         <Card.Text>
-                        Description:{textTruncate(taskObject.description)}
+                        Description:{textTruncate(taskObject.description,58)}
                         </Card.Text>
                         <Card.Text>   
                         Date: {formatDate(taskObject.date)}
