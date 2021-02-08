@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Container, Row, Col, Button,} from 'react-bootstrap';
-import Task from './Task/Task';
-import NewTask from './NewTask/NewTask';
-import Confirm from '../components/Confirm';
-import EditTaskModal from './EditTaskModal';
+import Task from '../../Task/Task';
+import NewTask from '../../NewTask/NewTask';
+import Confirm from '../../Confirm';
+import EditTaskModal from '../../EditTaskModal';
 import styles from './toDoListStyles.module.css';
 
 
