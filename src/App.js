@@ -1,6 +1,6 @@
 import React from 'react'; 
 import './App.css';
-import {ToDoList} from './components/ToDoList';
+import {ToDoList} from './components/Pages/ToDoList/ToDoList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom';
 import About from './components/Pages/About/About';
