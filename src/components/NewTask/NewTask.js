@@ -2,13 +2,19 @@ import React, { PureComponent } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 //import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {formatDate} from '../../helpers/utils';
+import styles from './newTaskStyle.module.css';
+
 
 
 export default class NewTask extends PureComponent {
 
     state = {
         title: '',
-        description: ''
+        description: '',
+        date: new Date()
     }
 
     handleChange = (event) => {
@@ -32,14 +38,22 @@ export default class NewTask extends PureComponent {
             return;
         }
 
+        const {date} = this.state;
         const newTask = {
             title,
-            description
+            description,
+            date: formatDate(date.toISOString())
         };
 
         this.props.onAdd(newTask);
 
     };
+
+    handleChangeDate=(value)=>{
+        this.setState({
+          date: value || new Date()
+        });
+      };
 
     render(){
         const{onClose}=this.props;
@@ -59,7 +73,6 @@ export default class NewTask extends PureComponent {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
                     <FormControl
                     onChange={this.handleChange}
                     placeholder='Title'
@@ -73,7 +86,13 @@ export default class NewTask extends PureComponent {
                     placeholder='Description'
                     onChange={this.handleChange}
                     name='description'
-                    />                   
+                    />    
+                    <DatePicker 
+                    className={styles.date}
+                    minDate = {new Date()}
+                    selected={this.state.date}
+                    onChange={this.handleChangeDate}
+                    />               
                     </Modal.Body>
                     <Modal.Footer>
                     <Button

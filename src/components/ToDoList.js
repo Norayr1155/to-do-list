@@ -4,7 +4,7 @@ import Task from './Task/Task';
 import NewTask from './NewTask/NewTask';
 import Confirm from '../components/Confirm';
 import EditTaskModal from './EditTaskModal';
-import styles from './styles.module.css';
+import styles from './toDoListStyles.module.css';
 
 
 class ToDoList extends Component {
@@ -194,49 +194,45 @@ class ToDoList extends Component {
         });
     };
 
-    handleEdit=(editTask)=>{
-
-        fetch(`http://localhost:3001/task/${editTask._id}`, {
-            method:'PUT',
-            body:JSON.stringify(editTask),
-            headers:{
-                'Content-Type':'application/json'
-            }
-            
-        })
-        .then(async(response)=>{
-            const res = await response.json();
-
-            if(response.status>=400 && response.status<600){
-                if(res.error){
-                    throw res.error
-                }
-                else{
-                    throw new Error('Something was wrong')
-                }
-            }
-            
-            this.setState({
-                editTask
-            });
-
-        })
-        .catch((error)=>{
-            console.log('Error catched',error);
-        })
-
-        
+    handleEdit = (editTask) => {
+        this.setState({ editTask });
     };
 
-    handleSaveTask=(editedTask)=>{
-        const tasks=[...this.state.tasks];
-        const foundIndex=tasks.findIndex((task)=> task._id===editedTask._id);
-        tasks[foundIndex]=editedTask;
-        this.setState({
-            tasks,
-            editTask:null
+    handleSaveTask = (editedTask) => {
+
+        fetch(`http://localhost:3001/task/${editedTask._id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(editedTask)
+        })
+        .then(async (response) => {
+            const res = await response.json();
+
+            if(response.status >=400 && response.status < 600){
+
+                if(res.error){
+                    throw res.error;
+                }
+                else {
+                    throw new Error('Something went wrong!');
+                }
+            }
+                
+            const tasks = [...this.state.tasks];
+            const foundIndex = tasks.findIndex((task) => task._id === editedTask._id);
+            tasks[foundIndex] = editedTask;
+
+            this.setState({
+                tasks,
+                editTask: null
+            });
+        })
+        .catch((error)=>{
+            console.log('error catched', error);
         });
-    }
+    };
 
     render() {
 
