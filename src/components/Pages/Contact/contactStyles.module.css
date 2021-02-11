@@ -1,0 +1,14 @@
+.title{
+    text-align: center;
+    margin-top: 1%;
+}
+.formBody{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    margin-top: 3%;
+    width: 35%;
+    border: 2px solid rgb(0, 0, 0);
+}
+

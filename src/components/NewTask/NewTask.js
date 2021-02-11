@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent,createRef } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 //import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
@@ -11,10 +11,19 @@ import styles from './newTaskStyle.module.css';
 
 export default class NewTask extends PureComponent {
 
-    state = {
-        title: '',
-        description: '',
-        date: new Date()
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            title: '',
+            description: '',
+            date: new Date()
+        }
+        this.addNewTask = createRef();
+    }
+
+    componentDidMount(){
+        this.addNewTask.current.focus();
     }
 
     handleChange = (event) => {
@@ -79,6 +88,7 @@ export default class NewTask extends PureComponent {
                     onKeyPress={this.handleKeyDown}
                     className='mb-3'
                     name='title'
+                    ref={this.addNewTask}
                     />
                     <FormControl 
                     as='textarea' 
