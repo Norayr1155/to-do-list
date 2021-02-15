@@ -246,6 +246,7 @@ class ToDoList extends Component {
                 md={4}
                 lg={3}
                 xl={2}
+                className={styles.taskCol}
                 >
                 <Task 
                 data={taskObject}
