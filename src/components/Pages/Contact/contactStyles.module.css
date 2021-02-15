@@ -1,0 +1,22 @@
+.title{
+    text-align: center;
+    margin-top: 1%;
+}
+.formBody{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    margin-top: 3%;
+    width: 37%;
+    padding: 2% 1%;
+    background-color: rgb(189, 189, 189);
+
+}
+.invalid, .invalid:focus{
+    border: 1px solid red;
+}
+
+    
+
+
