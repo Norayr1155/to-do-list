@@ -5,12 +5,13 @@ import NewTask from '../../NewTask/NewTask';
 import Confirm from '../../Confirm';
 import EditTaskModal from '../../EditTaskModal';
 import styles from './toDoListStyles.module.css';
+import {connect} from 'react-redux';
+import request from '../../../helpers/request';
 
 
 class ToDoList extends Component {
 
     state = {
-        tasks: [],
         selectedTasks:new Set(),
         showConfirm:false,
         openNewTaskModal:false,
@@ -19,96 +20,47 @@ class ToDoList extends Component {
     }
 
     componentDidMount(){
-        fetch('http://localhost:3001/task', {
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            }
-            
-        })
-        .then(async(response)=>{
-            const res = await response.json();
-
-            if(response.status>=400 && response.status<600){
-                if(res.error){
-                    throw res.error
-                }
-                else{
-                    throw new Error('Something was wrong')
-                }
-            }
-            this.setState({
-                tasks: res,
-            });
-        })
-        .catch((error)=>{
-            console.log('Error catched',error);
-        }) 
+        this.props.getTasks();
     }
 
     addTask = (newTask) => {
-
-        fetch('http://localhost:3001/task', {
-            method:'POST',
-            body:JSON.stringify(newTask),
-            headers:{
-                'Content-Type':'application/json'
-            }
-            
-        })
-        .then(async(response)=>{
-            const res = await response.json();
-
-            if(response.status>=400 && response.status<600){
-                if(res.error){
-                    throw res.error
-                }
-                else{
-                    throw new Error('Something was wrong')
-                }
-            }
-            this.setState({
-                tasks: [...this.state.tasks, res],
-                openNewTaskModal:false
-                });
-        })
-        .catch((error)=>{
-            console.log('Error catched',error);
-        })
-        
-        
-        
+        this.props.addTheTask(newTask);
+        this.setState({
+            openNewTaskModal:false
+        });
     }
 
     removeTask=(taskId)=>{
 
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method:'DELETE',
-            headers:{
-                'Content-Type':'application/json'
-            }
+        this.props.deleteTheTask(taskId);
+
+        // fetch(`http://localhost:3001/task/${taskId}`, {
+        //     method:'DELETE',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     }
             
-        })
-        .then(async(response)=>{
-            const res = await response.json();
+        // })
+        // .then(async(response)=>{
+        //     const res = await response.json();
 
-            if(response.status>=400 && response.status<600){
-                if(res.error){
-                    throw res.error
-                }
-                else{
-                    throw new Error('Something was wrong')
-                }
-            }
-            const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id);
+        //     if(response.status>=400 && response.status<600){
+        //         if(res.error){
+        //             throw res.error
+        //         }
+        //         else{
+        //             throw new Error('Something was wrong')
+        //         }
+        //     }
+        //     const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id);
 
-            this.setState({
-            tasks:newTasks
-            });
-        })
-        .catch((error)=>{
-            console.log('Error catched',error);
-        });
+        //     this.setState({
+        //     tasks:newTasks
+        //     });
+        // })
+        // .catch((error)=>{
+        //     console.log('Error catched',error);
+        // });
 
     }
 
@@ -236,7 +188,8 @@ class ToDoList extends Component {
 
     render() {
 
-        const{tasks,selectedTasks,showConfirm,openNewTaskModal,editTask}=this.state;
+        const{selectedTasks,showConfirm,openNewTaskModal,editTask}=this.state;
+        const {tasks}=this.props;
         
         let uniqueTask = tasks.map((taskObject) => {
             return <Col
@@ -332,4 +285,43 @@ class ToDoList extends Component {
     }
 }
 
-export { ToDoList };
+const mapStateToProps = (state)=>{
+    return {
+        tasks: state.tasks
+    };
+};
+
+const mapDispatchToProps = {
+    getTasks: ()=>{
+        return (dispatch)=>{
+            request('http://localhost:3001/task')
+            .then((tasks)=>{
+            dispatch({type: 'GET_TASKS', tasks: tasks});
+            });
+        }
+    },
+
+    addTheTask:(newTask)=>{
+        return (dispatch)=>{
+            request('http://localhost:3001/task','POST',newTask)
+            .then((res)=>{
+            dispatch({type: 'ADD_TASK', newTask: res});
+            });
+        }
+    },
+
+    deleteTheTask:(taskId)=>{
+        return (dispatch)=>{
+            request(`http://localhost:3001/task/${taskId}`,'DELETE')
+            .then((res)=>{
+            const newTasks=this.state.tasks.filter((taskObject)=> taskId!==taskObject._id)
+            dispatch({type: 'DELETE_TASK', filteredTasks: newTasks});
+            });
+        }
+    }
+};
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(ToDoList);
+
