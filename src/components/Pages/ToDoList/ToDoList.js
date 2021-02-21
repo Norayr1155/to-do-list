@@ -6,7 +6,7 @@ import Confirm from '../../Confirm';
 import EditTaskModal from '../../EditTaskModal';
 import styles from './toDoListStyles.module.css';
 import {connect} from 'react-redux';
-import { getTasks, deleteTask,deleteTasks,handleSaveTask } from '../../store/action';
+import { getTasks, deleteTask,deleteTasks,handleSaveTask } from '../../store/actions';
 
 class ToDoList extends Component {
 

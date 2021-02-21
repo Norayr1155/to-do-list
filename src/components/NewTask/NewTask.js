@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from '../../helpers/utils';
 import styles from './newTaskStyle.module.css';
 import {connect} from 'react-redux';
-import {addTask} from '../../components/store/action';
+import {addTask} from '../../components/store/actions';
 
 
 
