@@ -1,18 +1,32 @@
+import * as actionTypes from './actionTypes';
+
+
 const defaultState={
     tasks:[],
     addTaskSuccess: false,
     deleteTasksSuccess: false,
     saveTaskSuccess:false,
+    loading: false
 };
 
 export default function reducer(state=defaultState, action){
 
     switch(action.type){
-      
+
+      case actionTypes.PENDING:{
+        return {
+          ...state,
+          loading: true,
+          addTaskSuccess: false,
+          deleteTasksSuccess: false,
+          saveTaskSuccess: false
+        };
+      }
       case 'GET_TASKS':{
         return {
           ...state,
-          tasks: action.tasks
+          tasks: action.tasks,
+          loading: false
         };
       }
 
@@ -20,21 +34,18 @@ export default function reducer(state=defaultState, action){
         return {
           ...state,
           tasks: [...state.tasks, action.task],
-          addTaskSuccess: true
+          addTaskSuccess: true,
+          loading: false
         };
       }
-      case 'ADDING_TASK':{
-        return {
-          ...state,
-          addTaskSuccess: false
-        };
-      }
+      
       case 'DELETE_TASK':{
 
         const newTasks = state.tasks.filter((task) => action.taskId !== task._id);
         return {
           ...state,
-          tasks: newTasks
+          tasks: newTasks,
+          loading: false
         };
       }
 
@@ -50,17 +61,12 @@ export default function reducer(state=defaultState, action){
         return {
           ...state,
           tasks: newTasks,
-          deleteTasksSuccess: true
+          deleteTasksSuccess: true,
+          loading: false
         };
       }
 
-      case 'DELETING_TASKS':{
-        return {
-          ...state,
-          deleteTasksSuccess: false
-        };
-      }
-
+      
       case 'SAVE_TASK':{
 
         const foundIndex = state.tasks.findIndex((task) => task._id === action.editedTask._id); 
@@ -69,16 +75,11 @@ export default function reducer(state=defaultState, action){
         return {
           ...state,
           tasks:state.tasks,
-          saveTaskSuccess:true
+          saveTaskSuccess:true,
+          loading: false
         };
       }
 
-      case 'SAVING_TASK':{
-        return {
-          ...state,
-          saveTaskSuccess: false
-        };
-      }
 
       default: return state;
     }

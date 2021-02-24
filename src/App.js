@@ -8,10 +8,11 @@ import Contact from './components/Pages/Contact/Contact';
 import Error404 from './components/Pages/Error404/Error404';
 import NavMenu from './components/NavMenu/NavMenu ';
 import SingleTask from './components/Pages/SingleTask/SingleTask';
+import Spinner from './components/Spinner/Spinner';
+import {connect} from 'react-redux';
 
 
-
-function App() {
+function App({loading}) {
   return (
     <div className="App">
       
@@ -51,9 +52,15 @@ function App() {
           <Redirect to='/error404'/>
           </Switch>
       </BrowserRouter>
-      
+      { loading && <Spinner />}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+      loading: state.loading
+  };
+};
+
+export default connect(mapStateToProps)(App);

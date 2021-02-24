@@ -5,10 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from '../helpers/utils';
 import styles from './editTaskModalStyles.module.css';
+import {handleSaveTask} from './store/actions';
+import {connect} from 'react-redux';
 
 
 
-export default class NewTask extends Component {
+class NewTask extends Component {
     
     constructor(props){
         super(props);
@@ -51,7 +53,7 @@ export default class NewTask extends Component {
         if (!title) {
             return;
         }
-        this.props.onSave({
+        this.props.handleSaveTask({
             _id:this.state._id,
             title,
             description,
@@ -131,8 +133,13 @@ export default class NewTask extends Component {
 }
 
 NewTask.propTypes = {
-    onSave: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     data:PropTypes.object.isRequired
 
 };
+
+const mapDispatchToProps = {
+   handleSaveTask
+};
+
+export default connect(null,mapDispatchToProps)(NewTask);

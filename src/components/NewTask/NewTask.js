@@ -1,6 +1,5 @@
 import React, { PureComponent,createRef } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
-//import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
