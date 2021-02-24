@@ -38,10 +38,10 @@ class ToDoList extends Component {
             return;
         }
 
-        if (!prevProps.saveTaskSuccess && this.props.saveTaskSuccess){
+        if (!prevProps.editTasksSuccess && this.props.editTasksSuccess){
             this.setState({
                 editTask:null
-        });
+            });
             return;
         }
 
@@ -201,7 +201,7 @@ const mapStateToProps = (state)=>{
         tasks: state.tasks,
         addTaskSuccess: state.addTaskSuccess,
         deleteTasksSuccess: state.deleteTasksSuccess,
-        saveTaskSuccess:state.saveTaskSuccess
+        editTasksSuccess:state.editTasksSuccess,
 
     };
 };
@@ -210,7 +210,6 @@ const mapDispatchToProps = {
     getTasks,
     deleteTask,
     deleteTasks,
-    
 };
 
 
