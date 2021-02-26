@@ -1,6 +1,6 @@
 import request from '../../helpers/request';
 import * as actionTypes from './actionTypes';
-
+import { history } from '../../helpers/history';
 
 export function getTasks(){
 
@@ -35,12 +35,15 @@ export function addTask(newTask){
     }
 };
 
-export function deleteTask(taskId){
+export function deleteTask(taskId,from){
         return function(dispatch){
             dispatch({type: actionTypes.PENDING});
             request(`http://localhost:3001/task/${taskId}`, 'DELETE')
             .then(()=>{
-                dispatch({type: 'DELETE_TASK', taskId});
+                dispatch({ type: actionTypes.DELETE_TASK, taskId, from});
+                if (from === 'single') {
+                    history.push('/');
+                }
             })
             .catch((err) => {
                 dispatch({
