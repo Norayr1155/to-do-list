@@ -15,27 +15,22 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App({loading, successMessage, errorMessage}) {
 
+  const notification ={
+    position: "bottom-left",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  };
+
   useEffect(()=>{
     if(successMessage){
-      toast.success(successMessage, {
-        position: "bottom-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-        });
+      toast.success(successMessage, notification);
     }
 
     if(errorMessage){
-      toast.error(errorMessage, {
-        position: "bottom-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true
-        });
+      toast.error(errorMessage, notification);
     }
 
   }, [successMessage, errorMessage]);
