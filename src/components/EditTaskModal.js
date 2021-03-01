@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from '../helpers/utils';
 import styles from './editTaskModalStyles.module.css';
-import {handleSaveTask} from './store/actions';
+import {editTask} from './store/actions';
 import {connect} from 'react-redux';
 
 
@@ -46,19 +46,21 @@ class NewTask extends Component {
         }
     };
 
-    handleSubmit = () => {
+    handleSave = () => {
         const title = this.state.title.trim();
         const description = this.state.description.trim();
 
         if (!title) {
             return;
         }
-        this.props.handleSaveTask({
+        const editedTask ={
             _id:this.state._id,
             title,
             description,
             date: formatDate(this.state.date.toISOString())
-        });
+        };
+
+        this.props.editTask(editedTask, this.props.from);
     };
 
     handleChangeDate=(value)=>{
@@ -113,7 +115,7 @@ class NewTask extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                     <Button
-                        onClick={this.handleSubmit}
+                        onClick={this.handleSave}
                         variant='danger'
                     >
                     Save
@@ -139,7 +141,7 @@ NewTask.propTypes = {
 };
 
 const mapDispatchToProps = {
-   handleSaveTask
+   editTask
 };
 
 export default connect(null,mapDispatchToProps)(NewTask);

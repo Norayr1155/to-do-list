@@ -4,41 +4,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {formatDate} from '../../../helpers/utils';
 import EditTaskModal from '../../EditTaskModal';
+import  {getTask} from '../../store/actions';
+import {connect} from 'react-redux';
 
-export default class SingleTask extends Component{
+class SingleTask extends Component{
     state={
-        task: null,
         openEditModal: false
     };
 
     componentDidMount(){
         const taskId = this.props.match.params.taskId;
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": 'application/json'
-            }
-        })
-            .then(async (response) => {
-                const res = await response.json();
+        this.props.getTask(taskId);
+    }
 
-                if(response.status >=400 && response.status < 600){
-                    if(res.error){
-                        throw res.error;
-                    }
-                    else {
-                        throw new Error('Something went wrong!');
-                    }
-                }
-
-              this.setState({
-                  task: res
-              });
-
-            })
-            .catch((error)=>{
-                console.log('catch error', error);
+    componentDidUpdate(prevProps) {
+        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+            this.setState({
+                openEditModal: false
             });
+            return;
+        }
     }
 
     deleteTask = ()=>{
@@ -68,39 +53,6 @@ export default class SingleTask extends Component{
             });
     }
 
-    handleSaveTask = (editedTask)=>{
-        fetch(`http://localhost:3001/task/${editedTask._id}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify(editedTask)
-        })
-            .then(async (response) => {
-                const res = await response.json();
-
-                if(response.status >=400 && response.status < 600){
-                    if(res.error){
-                        throw res.error;
-                    }
-                    else {
-                        throw new Error('Something went wrong!');
-                    }
-                }
-
-        this.setState({
-            task: res,
-            openEditModal: false
-        });
-
-            })
-            .catch((error)=>{
-                console.log('catch error', error);
-            });
-
-
-
-    };
 
     toggleEditModal = ()=>{
         this.setState({
@@ -109,7 +61,8 @@ export default class SingleTask extends Component{
     };
 
 render(){
-    const {task, openEditModal} = this.state;
+    const {openEditModal} = this.state;
+    const {task} = this.props;
 
     return(
      <div className='mt-5'>
@@ -159,7 +112,7 @@ render(){
             <EditTaskModal
             data={task}
             onClose={this.toggleEditModal}
-            onSave={this.handleSaveTask}
+            from='single'
         />
         }
      </div>
@@ -168,3 +121,16 @@ render(){
 
 
 };
+
+const mapStateToProps = (state) => {
+    return {
+        task: state.task,
+        editTaskSuccess:state.editTaskSuccess,
+    };
+};
+
+const mapDispatchToProps = {
+    getTask
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);
