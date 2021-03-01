@@ -84,6 +84,7 @@ function Search({getTasks}) {
 
     const [search, setSearch] = useState('');
 
+
     const [dates, setDates] = useState({
         create_lte: null,
         create_gte: null,
@@ -98,7 +99,8 @@ function Search({getTasks}) {
         });
     };
 
-    const handleSubmit = ()=>{
+    const collectParams= ()=>{
+            
         const params = {};
 
         search && (params.search = search);
@@ -106,16 +108,27 @@ function Search({getTasks}) {
         status.value && (params.status = status.value);
 
 
-       for(let key in dates){
-           const value = dates[key];
-           if(value){
-            const date = formatDate(value.toISOString());
-            params[key] = date;
-           }
-       }
+        for(let key in dates){
+            const value = dates[key];
+            if(value){
+                const date = formatDate(value.toISOString());
+                params[key] = date;
+            }
+        }
+        
+        return params;
+    }
 
-       getTasks(params);
+    const handleSubmit = ()=>{
 
+        getTasks(collectParams());
+    };
+
+    const handleKeyDown = (event) => {
+        
+        if(event.key === 'Enter'){
+            getTasks(collectParams());       
+        }
     };
 
     return (
@@ -127,6 +140,7 @@ function Search({getTasks}) {
                 <FormControl
                     placeholder="Search"
                     onChange={(event) => setSearch(event.target.value)}
+                    onKeyDown={handleKeyDown}
                 />
 
                 <DropdownButton
