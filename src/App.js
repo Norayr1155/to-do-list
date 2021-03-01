@@ -2,7 +2,7 @@ import React ,{useEffect}from 'react';
 import './App.css';
 import ToDoList from './components/Pages/ToDoList/ToDoList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom';
+import {Router,Route,Switch,Redirect} from 'react-router-dom';
 import About from './components/Pages/About/About';
 import Contact from './components/Pages/Contact/Contact';
 import Error404 from './components/Pages/Error404/Error404';
@@ -12,6 +12,8 @@ import Spinner from './components/Spinner/Spinner';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {history} from './helpers/history';
+
 
 function App({loading, successMessage, errorMessage}) {
 
@@ -38,7 +40,7 @@ function App({loading, successMessage, errorMessage}) {
   return (
     <div className="App">
       
-      <BrowserRouter>
+      <Router history={history}>
       <NavMenu/>
         <Switch>
           <Route
@@ -73,7 +75,7 @@ function App({loading, successMessage, errorMessage}) {
           />
           <Redirect to='/error404'/>
           </Switch>
-      </BrowserRouter>
+      </Router>
       { loading && <Spinner />}
       <ToastContainer />
     </div>

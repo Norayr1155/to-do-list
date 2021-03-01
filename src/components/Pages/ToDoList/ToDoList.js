@@ -4,6 +4,7 @@ import Task from '../../Task/Task';
 import NewTask from '../../NewTask/NewTask';
 import Confirm from '../../Confirm';
 import EditTaskModal from '../../EditTaskModal';
+import Search from '../../Search/Search';
 import styles from './toDoListStyles.module.css';
 import {connect} from 'react-redux';
 import { getTasks, deleteTask,deleteTasks } from '../../store/actions';
@@ -131,7 +132,7 @@ class ToDoList extends Component {
                 <Row>
                     <Col>
                     <h2 className={styles.title}>To Do List</h2>
-                    
+                    <Search />
                         <Button
                             variant='primary'
                             onClick={this.togglenewTaskModal}

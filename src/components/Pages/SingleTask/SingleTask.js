@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {formatDate} from '../../../helpers/utils';
 import EditTaskModal from '../../EditTaskModal';
-import  {getTask} from '../../store/actions';
+import  {getTask,deleteTask} from '../../store/actions';
 import {connect} from 'react-redux';
 
 class SingleTask extends Component{
@@ -27,37 +27,8 @@ class SingleTask extends Component{
     }
 
     deleteTask = ()=>{
-        const taskId = this.state.task._id;
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": 'application/json'
-            }
-        })
-            .then(async (response) => {
-                const res = await response.json();
-
-                if(response.status >=400 && response.status < 600){
-                    if(res.error){
-                        throw res.error;
-                    }
-                    else {
-                        throw new Error('Something went wrong!');
-                    }
-                }
-
-                this.props.history.push('/');
-            })
-            .catch((error)=>{
-                console.log('catch error', error);
-            });
-    }
-
-
-    toggleEditModal = ()=>{
-        this.setState({
-            openEditModal: !this.state.openEditModal
-        });
+        const taskId = this.props.task._id;
+        this.props.deleteTask(taskId, 'single');
     };
 
 render(){
@@ -130,7 +101,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    getTask
+    getTask,
+    deleteTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);
