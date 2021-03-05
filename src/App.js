@@ -15,16 +15,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {history} from './helpers/history';
 
 
-function App({loading, successMessage, errorMessage}) {
+const notification ={
+  position: "bottom-left",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true
+};
 
-  const notification ={
-    position: "bottom-left",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true
-  };
+function App({loading, successMessage, errorMessage}) {
 
   useEffect(()=>{
     if(successMessage){
