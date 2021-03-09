@@ -23,9 +23,9 @@ const notification ={
   draggable: true
 };
 
+
 function App({loading, successMessage, errorMessage}) {
 
-  
   useEffect(()=>{
     if(successMessage){
       toast.success(successMessage, notification);
