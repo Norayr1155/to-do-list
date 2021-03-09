@@ -14,7 +14,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {history} from './helpers/history';
 
-
 const notification ={
   position: "bottom-left",
   autoClose: 3000,
@@ -23,6 +22,7 @@ const notification ={
   pauseOnHover: true,
   draggable: true
 };
+
 
 function App({loading, successMessage, errorMessage}) {
 
