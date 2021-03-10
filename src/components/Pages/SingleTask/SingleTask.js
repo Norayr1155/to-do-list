@@ -90,7 +90,6 @@ render(){
             data={task}
             onClose={this.toggleEditModal}
             from='single'
-            onSave={this.toggleEditModal}
         />
         }
      </div>

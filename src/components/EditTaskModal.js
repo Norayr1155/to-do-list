@@ -64,7 +64,7 @@ class NewTask extends Component {
         this.props.editTask(editedTask, this.props.from);
         
         if(this.props.from==='single'){
-            this.props.onSave()
+            this.props.onClose()
         }
     };
 
