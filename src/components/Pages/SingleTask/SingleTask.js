@@ -31,6 +31,12 @@ class SingleTask extends Component{
         this.props.deleteTask(taskId, 'single');
     };
 
+    toggleEditModal = ()=>{
+        this.setState({
+            openEditModal: !this.state.openEditModal
+        });
+    };
+
 render(){
     const {openEditModal} = this.state;
     const {task} = this.props;
