@@ -163,7 +163,6 @@ function submitForm ()  {
                         <Button 
                         variant="warning"
                         onClick = {submitForm}
-                        className={styles.submitButton}
                         >
                         Send
                         </Button>

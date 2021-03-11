@@ -8,6 +8,8 @@ import Contact from './components/Pages/Contact/Contact';
 import Error404 from './components/Pages/Error404/Error404';
 import NavMenu from './components/NavMenu/NavMenu ';
 import SingleTask from './components/Pages/SingleTask/SingleTask';
+import Registration from './components/Pages/Registration/Registration';
+import Login from './components/Pages/Login/Login';
 import Spinner from './components/Spinner/Spinner';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -71,6 +73,16 @@ function App({loading, successMessage, errorMessage}) {
           <Route
           path='/task/:taskId'
           component={SingleTask}
+          exact
+          />
+          <Route
+          path='/registration'
+          component={Registration}
+          exact
+          />
+          <Route
+          path='/login'
+          component={Login}
           exact
           />
           <Redirect to='/error404'/>

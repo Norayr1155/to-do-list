@@ -3,12 +3,14 @@ import {Button,Card} from 'react-bootstrap';
 import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash,faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash,faEdit,faCheck, faRedo} from '@fortawesome/free-solid-svg-icons';
 import {formatDate,textTruncate} from '../../helpers/utils';
 import {Link} from 'react-router-dom';
+import {editTask} from '../../components/store/actions';
+import {connect} from 'react-redux';
 
 
-export default class Task extends PureComponent{
+class Task extends PureComponent{
 
     static propTypes={
         data:PropTypes.object.isRequired,
@@ -28,7 +30,7 @@ export default class Task extends PureComponent{
     render(){
         
         const taskObject = this.props.data;
-        const {onDelete,disabled,selected,onEdit}=this.props;
+        const {onDelete,disabled,selected,onEdit,editTask}=this.props;
         return(
             <Card className={`${styles.task} ${selected?styles.selectedTask:""}`}>
                     <Card.Body>
@@ -45,6 +47,12 @@ export default class Task extends PureComponent{
                         Description:{textTruncate(taskObject.description,58)}
                         </Card.Text>
                         <Card.Text>   
+                        Status: {taskObject.status}
+                        </Card.Text>
+                        <Card.Text>   
+                        Created at: {formatDate(taskObject.created_at)}
+                        </Card.Text>
+                        <Card.Text>   
                         Date: {formatDate(taskObject.date)}
                         </Card.Text>
                         <Button 
@@ -55,8 +63,9 @@ export default class Task extends PureComponent{
                         >
                         <FontAwesomeIcon icon={faEdit} />
                         </Button>
-
+                        
                         <Button 
+                        className='mr-2'
                         variant="danger"
                         onClick={()=>onDelete(taskObject._id)}
                         disabled={disabled}
@@ -64,8 +73,39 @@ export default class Task extends PureComponent{
                         <FontAwesomeIcon icon={faTrash} />
                         </Button>
 
+                        {
+                            taskObject.status==="active" ?
+                            <Button
+                            variant="success"
+                            disabled={disabled}
+                            onClick={() => editTask({
+                            status: 'done',
+                            _id: taskObject._id
+                            })}
+                            >
+                            <FontAwesomeIcon icon={faCheck} />
+                            </Button> :
+
+                            <Button
+                            variant="secondary"
+                            disabled={disabled}
+                            onClick={() => editTask({
+                            status: 'active',
+                            _id: taskObject._id
+                            })}
+                            >
+                            <FontAwesomeIcon icon={faRedo} />
+                            </Button>
+                        }
+
                     </Card.Body>
                 </Card>
         )
     }
 }
+
+const mapDispatchToProps = {
+    editTask
+};
+
+export default connect(null, mapDispatchToProps)(Task);
