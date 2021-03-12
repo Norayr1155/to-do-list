@@ -60,8 +60,17 @@ export default function Registration(props){
             }
         }
 
-        
-        setValues({
+        if(name==='confirmPassword' && value){
+            if(value!==values.password){
+              setErrors({
+                  ...errors,
+                  confirmPassword: 'Password must be the same'
+              }); 
+            }
+
+        }
+
+         setValues({
             ...values,
             [name]: value.trimStart()
         });
@@ -155,11 +164,7 @@ export default function Registration(props){
                         value={values.confirmPassword}
                         />
                         <Form.Text className="text-danger">
-                        {
-                        values.confirmPassword && values.confirmPassword!==values.password? 
-                        'Not the same password':
-                        errors.confirmPassword
-                        }
+                        {errors.confirmPassword}
                         </Form.Text>
                     </Form.Group>
 
