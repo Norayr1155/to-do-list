@@ -25,6 +25,16 @@ const notification ={
   draggable: true
 };
 
+function AuthRoute({path, component}){
+
+  return (
+    <Route 
+    path={path}
+    component={component}
+   />
+  );
+
+};
 
 function App({loading, successMessage, errorMessage}) {
 
@@ -45,42 +55,43 @@ function App({loading, successMessage, errorMessage}) {
       <Router history={history}>
       <NavMenu/>
         <Switch>
-          <Route
+          <AuthRoute 
           path='/'
-          component={ToDoList}
+          component = {ToDoList}
           exact
           />
-          <Route
+          
+          <AuthRoute
           path='/home'
           component={ToDoList}
           exact
           />
-          <Route
+          <AuthRoute
           path='/about'
           component={About}
           exact
           />
-          <Route
+          <AuthRoute
           path='/contact'
           component={Contact}
           exact
           />
-          <Route
+          <AuthRoute
           path='/error404'
           component={Error404}
           exact
           />
-          <Route
+          <AuthRoute
           path='/task/:taskId'
           component={SingleTask}
           exact
           />
-          <Route
+          <AuthRoute
           path='/registration'
           component={Registration}
           exact
           />
-          <Route
+          <AuthRoute
           path='/login'
           component={Login}
           exact
@@ -98,7 +109,8 @@ const mapStateToProps = (state) => {
   return {
       loading: state.loading,
       successMessage: state.successMessage,
-      errorMessage: state.errorMessage
+      errorMessage: state.errorMessage,
+      isAuthenticated: state.isAuthenticated
   };
 };
 

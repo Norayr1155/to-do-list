@@ -2,3 +2,7 @@
     color: red;
     font-weight: 800;
 } 
+
+.navBar{
+    align-items: center;
+}

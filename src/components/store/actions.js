@@ -115,3 +115,43 @@ export function getTask(taskId) {
     }
 }
 
+export function register(data) {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.PENDING });
+        request(`${apiHost}/user`, 'POST', data)
+        .then(() => {
+            dispatch({ 
+                type: actionTypes.REGISTER_SUCCESS, 
+            });
+            history.push('/login');
+        })
+        .catch((err) => {
+            dispatch({
+                type: actionTypes.ERROR,
+                error: err.message
+            });
+        });
+}
+}
+
+export function login(data) {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.PENDING });
+         request(`${apiHost}/user/sign-in`, 'POST', data)
+        .then((res) => {
+            localStorage.setItem('token', JSON.stringify(res));
+
+            dispatch({ 
+                type: actionTypes.LOGIN_SUCCESS, 
+            });
+            history.push('/');
+        })
+        .catch((err) => {
+            dispatch({
+                type: actionTypes.ERROR,
+                error: err.message
+            });
+        });
+}
+}
+
