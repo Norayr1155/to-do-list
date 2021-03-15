@@ -43,7 +43,7 @@ class NewTask extends Component {
 
     handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            this.handleSubmit();
+            this.handleSave();
         }
     };
 

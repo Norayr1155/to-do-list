@@ -82,7 +82,11 @@ export function editTask(editedTask,from){
 
         request(`${apiHost}/task/${editedTask._id}`, 'PUT', editedTask)
         .then(()=>{
-        dispatch({type: actionTypes.EDIT_TASK, editedTask, from});
+            dispatch({ 
+                type: actionTypes.EDIT_TASK, 
+                editedTask, from,
+                status: editedTask.status
+            });
         })
         .catch((err) => {
             dispatch({
