@@ -1,6 +1,7 @@
 import request from '../../helpers/request';
 import * as actionTypes from './actionTypes';
 import { history } from '../../helpers/history';
+import {saveToken} from '../../helpers/auth';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
@@ -139,7 +140,7 @@ export function login(data) {
         dispatch({ type: actionTypes.PENDING });
          request(`${apiHost}/user/sign-in`, 'POST', data)
         .then((res) => {
-            localStorage.setItem('token', JSON.stringify(res));
+            saveToken(res);
 
             dispatch({ 
                 type: actionTypes.LOGIN_SUCCESS, 
