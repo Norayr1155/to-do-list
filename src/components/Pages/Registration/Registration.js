@@ -98,7 +98,6 @@ function Registration(props){
         }
 
         props.register(values);
-        console.log(values);
     }
     return (
         <>

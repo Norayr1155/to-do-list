@@ -13,6 +13,7 @@ const defaultState={
   loading: false,
   successMessage: null,
   errorMessage: null,
+  sendContactSuccess:false,
   isAuthenticated: checkLoginStatus()
 };
 
@@ -155,6 +156,20 @@ export default function reducer(state=defaultState, action){
         };
       }
 
+      case actionTypes.LOGOUT:
+        return {
+        ...state,
+          loading: false,
+          isAuthenticated: false
+      }
+
+      case actionTypes.SEND_CONTACT:
+        return {
+        ...state,
+          loading: false,
+          sendContactSuccess: true,
+          successMessage: 'Congrats you have sent the message!!!'
+      }
 
       default: return state;
     }
