@@ -165,12 +165,12 @@ export function login(data) {
 
 export function sendContact(data) {
     return function (dispatch) {
-        dispatch({ type: actionTypes.PENDING });
+        dispatch({ type: actionTypes.PENDING, });
         requestWithoutToken(`${apiHost}/form`, 'POST', data)
         .then((res) => {
 
             dispatch({ 
-                type: actionTypes.SEND_CONTACT, 
+                type: actionTypes.SEND_CONTACT,
             });
         })
         .catch((err) => {

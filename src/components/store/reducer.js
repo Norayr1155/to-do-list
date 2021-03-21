@@ -29,7 +29,8 @@ export default function reducer(state=defaultState, action){
           deleteTasksSuccess: false,
           editTasksSuccess: false,
           successMessage: null,
-          errorMessage: null
+          errorMessage: null,
+          sendContactSuccess:false
         };
       }
 
@@ -168,7 +169,7 @@ export default function reducer(state=defaultState, action){
         ...state,
           loading: false,
           sendContactSuccess: true,
-          successMessage: 'Congrats you have sent the message!!!'
+          successMessage: 'Congrats you have sent the message!!!',
       }
 
       default: return state;
