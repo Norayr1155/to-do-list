@@ -2,11 +2,13 @@ import React,{useState,} from 'react';
 import { Button,Form } from 'react-bootstrap';
 import styles from './registrationStyles.module.css';
 import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {register} from '../../store/actions';
 
 const requiredErrorMessage = 'Field is required';
 
 
-export default function Registration(props){
+function Registration(props){
 
     const [values, setValues] = useState({
         name: '',
@@ -95,7 +97,8 @@ export default function Registration(props){
             });
         }
 
-        console.log(values)
+        props.register(values);
+        console.log(values);
     }
     return (
         <>
@@ -192,3 +195,8 @@ export default function Registration(props){
         </>
     );
 }; 
+
+const mapDispatchToProps = {
+    register
+}
+export default connect(null, mapDispatchToProps)(Registration);

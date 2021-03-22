@@ -2,11 +2,14 @@ import React, {useState,} from 'react';
 import { Button,Form } from 'react-bootstrap';
 import styles from './loginStyles.module.css';
 import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {login} from '../../store/actions';
+
 
 const requiredErrorMessage = 'Field is required';
 
 
-export default function Login(props){
+function Login(props){
 
     const [values, setValues] = useState({
         email: '',
@@ -44,16 +47,6 @@ export default function Login(props){
             }
         }
 
-        if(name==='password' && value){
-            const passwordReg = /[0-9a-zA-Z]{6,}/;
-            if(!passwordReg.test(value)){
-              setErrors({
-                  ...errors,
-                  password: 'Invalid password'
-              }); 
-            }
-        }
-
             
         setValues({
             ...values,
@@ -76,8 +69,7 @@ export default function Login(props){
             });
         }
 
-        console.log(values)
-
+        props.login(values);
     }
     
 
@@ -140,3 +132,8 @@ export default function Login(props){
         </>
     );
 }; 
+
+const mapDispatchToProps = {
+    login
+}
+export default connect(null, mapDispatchToProps)(Login);
