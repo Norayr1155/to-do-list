@@ -2,7 +2,7 @@ import React ,{useEffect}from 'react';
 import './App.css';
 import ToDoList from './components/Pages/ToDoList/ToDoList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Router,Route,Switch,Redirect} from 'react-router-dom';
+import {Router,Switch,Redirect} from 'react-router-dom';
 import About from './components/Pages/About/About';
 import Contact from './components/Pages/Contact/Contact';
 import Error404 from './components/Pages/Error404/Error404';
@@ -11,6 +11,7 @@ import SingleTask from './components/Pages/SingleTask/SingleTask';
 import Registration from './components/Pages/Registration/Registration';
 import Login from './components/Pages/Login/Login';
 import Spinner from './components/Spinner/Spinner';
+import AuthRoute from './components/AuthRoute';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,16 +26,6 @@ const notification ={
   draggable: true
 };
 
-function AuthRoute({path, component}){
-
-  return (
-    <Route 
-    path={path}
-    component={component}
-   />
-  );
-
-};
 
 function App({loading, successMessage, errorMessage}) {
 
@@ -59,12 +50,14 @@ function App({loading, successMessage, errorMessage}) {
           path='/'
           component = {ToDoList}
           exact
+          type='private'
           />
           
           <AuthRoute
           path='/home'
           component={ToDoList}
           exact
+          type='private'
           />
           <AuthRoute
           path='/about'
@@ -85,16 +78,19 @@ function App({loading, successMessage, errorMessage}) {
           path='/task/:taskId'
           component={SingleTask}
           exact
+          type='private'
           />
           <AuthRoute
           path='/registration'
           component={Registration}
           exact
+          type='public'
           />
           <AuthRoute
           path='/login'
           component={Login}
           exact
+          type='public'
           />
           <Redirect to='/error404'/>
           </Switch>
@@ -110,7 +106,6 @@ const mapStateToProps = (state) => {
       loading: state.loading,
       successMessage: state.successMessage,
       errorMessage: state.errorMessage,
-      isAuthenticated: state.isAuthenticated
   };
 };
 
