@@ -194,6 +194,7 @@ function Search({getTasks}) {
                     {
                         dateOptions.map((option, index)=>(
                             <div
+                            className='mb-2'
                             key={index}
                             >
                             <span width='150px'>{option.label} </span>

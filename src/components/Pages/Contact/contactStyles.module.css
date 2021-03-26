@@ -5,6 +5,7 @@
 .formBody{
     display: flex;
     justify-content: center;
+    height: 63vh;
 }
 .form{
     margin-top: 3%;

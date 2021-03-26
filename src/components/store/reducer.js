@@ -172,6 +172,14 @@ export default function reducer(state=defaultState, action){
           successMessage: 'Congrats you have sent the message!!!',
       }
 
+      case actionTypes.GET_USER_INFO:
+        return {
+        ...state,
+          loading: false,
+          name:action.name,
+          surname:action.surname
+      }
+
       default: return state;
     }
 } 

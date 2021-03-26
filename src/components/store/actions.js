@@ -167,10 +167,31 @@ export function sendContact(data) {
     return function (dispatch) {
         dispatch({ type: actionTypes.PENDING, });
         requestWithoutToken(`${apiHost}/form`, 'POST', data)
-        .then((res) => {
+        .then(() => {
 
             dispatch({ 
                 type: actionTypes.SEND_CONTACT,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: actionTypes.ERROR,
+                error: err.message
+            });
+        });
+}
+}
+
+export function getUserInfo() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.PENDING, });
+        request(`${apiHost}/user`)
+        .then((res) => {
+            if(!res)  return;
+            dispatch({ 
+                type: actionTypes.GET_USER_INFO,
+                name:res.name,
+                surname:res.surname
             });
         })
         .catch((err) => {

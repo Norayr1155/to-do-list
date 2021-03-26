@@ -99,6 +99,13 @@ function Registration(props){
 
         props.register(values);
     }
+
+    function handleKeyDown (event){
+        if (event.key === 'Enter') {
+            submitForm();
+        }
+    };
+
     return (
         <>
             <h1 className={styles.title}>Register</h1>
@@ -164,6 +171,7 @@ function Registration(props){
                         name="confirmPassword" 
                         onChange={inputChangeValue}
                         value={values.confirmPassword}
+                        onKeyPress={handleKeyDown}
                         />
                         <Form.Text className="text-danger">
                         {errors.confirmPassword}
@@ -175,18 +183,21 @@ function Registration(props){
                         <Button 
                         variant="primary"
                         onClick = {submitForm}
+                        className='mb-3'
                         >
                         Register
                         </Button>
                     </div>
-                    <NavLink
-                    to='/login'
-                    activeClassName={styles.active}
-                    exact
-                    className='mr-3'
-                    >
-                    Already registered? Try to login.
-                    </NavLink>
+
+                    <div className="text-center">
+                        <NavLink
+                        to='/login'
+                        activeClassName={styles.active}
+                        exact
+                        >
+                        Already registered? Try to login.
+                        </NavLink>
+                    </div>
 
                 </Form>
 

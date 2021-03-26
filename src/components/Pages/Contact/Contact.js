@@ -69,14 +69,7 @@ function Contact(props) {
 
         if(valuesExist && !erorsExist){
 
-            props.sendContact(values)
-
-            setValues({
-                name: '',
-                email: '',
-                message: ''
-            });
-            
+            props.sendContact(values); 
         }  
 
         if(!valuesExist && !erorsExist){ 
@@ -87,6 +80,17 @@ function Contact(props) {
             });
     }
 }
+
+
+useEffect(()=>{
+    if(props.sendContactSuccess){
+        setValues({
+            name: '',
+            email: '',
+            message: ''
+        });
+    }
+}, [props.sendContactSuccess]);
 
 
 return (
