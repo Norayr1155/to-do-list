@@ -72,6 +72,11 @@ function Login(props){
         props.login(values);
     }
     
+    function handleKeyDown (event){
+        if (event.key === 'Enter') {
+            submitForm();
+        }
+    };
 
     return (
         <>
@@ -103,6 +108,7 @@ function Login(props){
                         name="password" 
                         onChange={inputChangeValue}
                         value={values.password}
+                        onKeyPress={handleKeyDown}
                         />
                         <Form.Text className="text-danger">
                         {errors.password}
@@ -113,19 +119,21 @@ function Login(props){
                         <Button 
                         variant="primary"
                         onClick = {submitForm}
+                        className='mb-3'
                         >
                         Log in
                         </Button>
                     </div>
 
-                    <NavLink
-                    to='/registration'
-                    activeClassName={styles.active}
-                    exact
-                    className='mr-3'
-                    >
-                    Don't have account yet? Register now!
-                    </NavLink>
+                    <div className="text-center">
+                        <NavLink
+                        to='/registration'
+                        activeClassName={styles.active}
+                        exact
+                        >
+                        Don't have account yet? Register now!
+                        </NavLink>
+                    </div>
                 </Form>
 
             </div>

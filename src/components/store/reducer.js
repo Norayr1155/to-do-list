@@ -13,6 +13,7 @@ const defaultState={
   loading: false,
   successMessage: null,
   errorMessage: null,
+  sendContactSuccess:false,
   isAuthenticated: checkLoginStatus()
 };
 
@@ -28,7 +29,8 @@ export default function reducer(state=defaultState, action){
           deleteTasksSuccess: false,
           editTasksSuccess: false,
           successMessage: null,
-          errorMessage: null
+          errorMessage: null,
+          sendContactSuccess:false
         };
       }
 
@@ -155,6 +157,28 @@ export default function reducer(state=defaultState, action){
         };
       }
 
+      case actionTypes.LOGOUT:
+        return {
+        ...state,
+          loading: false,
+          isAuthenticated: false
+      }
+
+      case actionTypes.SEND_CONTACT:
+        return {
+        ...state,
+          loading: false,
+          sendContactSuccess: true,
+          successMessage: 'Congrats you have sent the message!!!',
+      }
+
+      case actionTypes.GET_USER_INFO:
+        return {
+        ...state,
+          loading: false,
+          name:action.name,
+          surname:action.surname
+      }
 
       default: return state;
     }

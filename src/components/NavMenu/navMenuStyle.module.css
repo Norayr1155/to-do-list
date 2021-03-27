@@ -5,4 +5,10 @@
 
 .navBar{
     align-items: center;
+    height: 5.9vh;
+}
+.userInfo{
+    color: rgb(196, 196, 196) !important;
+    font-style: italic;
+    font-weight: bold;
 }

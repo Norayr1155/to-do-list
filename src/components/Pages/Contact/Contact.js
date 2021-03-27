@@ -1,11 +1,13 @@
 import React, { useState, useRef,useEffect } from 'react';
 import { Button,Form } from 'react-bootstrap';
 import styles from './contactStyles.module.css';
+import {sendContact} from '../../store/actions';
+import {connect} from 'react-redux';
 
 const requiredErrorMessage = 'Field is required';
 
 
-export default function Contact(props) {
+function Contact(props) {
 
     const [values, setValues] = useState({
         name: '',
@@ -58,60 +60,40 @@ export default function Contact(props) {
         });
     }
 
-function submitForm ()  {
-    const errorsArr = Object.values(errors);
-    const erorsExist = !errorsArr.every(el => el===null);
+    function submitForm ()  {
+        const errorsArr = Object.values(errors);
+        const erorsExist = !errorsArr.every(el => el===null);
 
-    const valuesArr = Object.values(values);
-    const valuesExist = !valuesArr.some(el => el==='');
+        const valuesArr = Object.values(values);
+        const valuesExist = !valuesArr.some(el => el==='');
 
-    if(valuesExist && !erorsExist){
+        if(valuesExist && !erorsExist){
 
-        fetch('http://localhost:3001/form', {
-            method: 'POST',
-            body: JSON.stringify(values),
-            headers: {
-                "Content-Type": 'application/json'
-            }
-        })
-            .then(async (response) => {
-                const res = await response.json();
+            props.sendContact(values); 
+        }  
 
-                if(response.status >=400 && response.status < 600){
-                    if(res.error){
-                        throw res.error;
-                    }
-                    else {
-                        throw new Error('Something went wrong!');
-                    }
-                }
-
-                console.log('Form sent successfully');
-                setValues({
-                    name: '',
-                    email: '',
-                    message: ''
-                });
-
-            })
-            .catch((error)=>{
-                console.log('catch error', error);
-            });
-
-        return;
-    }
-
-    if(!valuesExist && !erorsExist){ 
+        if(!valuesExist && !erorsExist){ 
             setErrors({
                 name: requiredErrorMessage,
                 email: requiredErrorMessage,
                 message: requiredErrorMessage
             });
     }
-        
 }
 
-    return (
+
+useEffect(()=>{
+    if(props.sendContactSuccess){
+        setValues({
+            name: '',
+            email: '',
+            message: ''
+        });
+    }
+}, [props.sendContactSuccess]);
+
+
+return (
         <>
             <h1 className={styles.title}>Contact Page</h1>
             <div className={styles.formBody}>
@@ -173,4 +155,16 @@ function submitForm ()  {
             </div>
         </>
     );
-};    
+};   
+
+const mapStateToProps = (state) => {
+    return {
+        sendContactSuccess:state.sendContactSuccess,
+    };
+};
+
+const mapDispatchToProps = {
+    sendContact,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

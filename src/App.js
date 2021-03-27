@@ -12,6 +12,7 @@ import Registration from './components/Pages/Registration/Registration';
 import Login from './components/Pages/Login/Login';
 import Spinner from './components/Spinner/Spinner';
 import AuthRoute from './components/AuthRoute';
+import Footer from './components/Footer/Footer';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -97,6 +98,7 @@ function App({loading, successMessage, errorMessage}) {
       </Router>
       { loading && <Spinner />}
       <ToastContainer />
+      <Footer/>
     </div>
   );
 }

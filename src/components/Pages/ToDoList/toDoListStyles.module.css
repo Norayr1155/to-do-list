@@ -1,5 +1,11 @@
+.todoListContainer{
+    margin-bottom: 4.150%;
+}
+
 .title{
-    margin-top: 1%;
+    margin: 2% 0;
+    text-align: center;
+    color: blue;
 }
 
 .taskCol{

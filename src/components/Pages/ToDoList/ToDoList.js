@@ -127,7 +127,7 @@ class ToDoList extends Component {
         });
 
         return (
-            <Container
+            <Container className={styles.todoListContainer}
             >
                 <Row>
                     <Col>
@@ -137,14 +137,14 @@ class ToDoList extends Component {
                             variant='primary'
                             onClick={this.togglenewTaskModal}
                             disabled={!!selectedTasks.size}
-                            className='mr-3 mt-2' 
+                            className='mr-3 mt-2 mb-3' 
                             >
                             Add 
                         </Button>
                         <Button
                             variant='warning'
                             onClick={this.selectAll}
-                            className='mr-3 mt-2' 
+                            className='mr-3 mt-2 mb-3' 
                             >
                             Select all
                         </Button>
@@ -152,7 +152,7 @@ class ToDoList extends Component {
                         <Button
                             variant='success'
                             onClick={this.unselectAll}
-                            className='mr-3 mt-2' 
+                            className='mr-3 mt-2 mb-3' 
                             disabled={!selectedTasks.size}
                             >
                             Unselect all
@@ -161,7 +161,7 @@ class ToDoList extends Component {
                             variant='danger'
                             onClick={this.toggleConfirm}
                             disabled={!selectedTasks.size}
-                            className='mt-2' 
+                            className='mt-2 mb-3' 
                             >
                             Delete selected
                         </Button>
