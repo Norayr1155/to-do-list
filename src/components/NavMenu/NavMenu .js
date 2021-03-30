@@ -54,7 +54,7 @@ function NavMenu({ isAuthenticated ,getUserInfo,userInfo}){
          
 
         {
-          isAuthenticated ? 
+          isAuthenticated && userInfo?
           
           <>
             <Button 
