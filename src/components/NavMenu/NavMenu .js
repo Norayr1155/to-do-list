@@ -7,13 +7,15 @@ import {logout} from '../../helpers/auth';
 import {getUserInfo} from '../store/actions';
 
 
-function NavMenu({ isAuthenticated ,getUserInfo,name,surname}){
+function NavMenu({ isAuthenticated ,getUserInfo,userInfo}){
+
 
   useEffect(()=>{
     if(isAuthenticated){
       getUserInfo()
     }
   },[getUserInfo,isAuthenticated]);
+  
 
     return(
         <Navbar bg="dark" variant="dark">
@@ -61,8 +63,8 @@ function NavMenu({ isAuthenticated ,getUserInfo,name,surname}){
             >
             Log out 
             </Button> 
-            <div className={styles.userInfo}>
-            {name} {surname}
+            <div className={styles.userInformation}>
+            {userInfo.name} {userInfo.surname} 
             </div>
           </>:
           
@@ -89,13 +91,16 @@ function NavMenu({ isAuthenticated ,getUserInfo,name,surname}){
         </Nav>
       </Navbar>
     );
+
 }; 
+
+
 
 const mapStateToProps = (state)=>{
   return {
     isAuthenticated: state.isAuthenticated,
-    name:state.name,
-    surname:state.surname
+    userInfo:state.userInfo
+    
   }
 };
 

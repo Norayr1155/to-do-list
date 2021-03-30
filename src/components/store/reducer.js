@@ -176,8 +176,7 @@ export default function reducer(state=defaultState, action){
         return {
         ...state,
           loading: false,
-          name:action.name,
-          surname:action.surname
+          userInfo:action.userInfos
       }
 
       default: return state;
