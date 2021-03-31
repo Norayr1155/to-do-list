@@ -8,7 +8,12 @@
     height: 5.9vh;
 }
 .userInformation{
-    color: rgb(196, 196, 196) !important;
+    color: rgb(155, 155, 155) !important;
     font-style: italic;
     font-weight: bold;
+    margin: 1% 0% 0% 1.5%;
+}
+.logout{
+    position: fixed;
+    right: 1%;
 }

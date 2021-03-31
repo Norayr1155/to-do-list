@@ -190,7 +190,7 @@ export function getUserInfo() {
             if(!res)  return;
             dispatch({ 
                 type: actionTypes.GET_USER_INFO,
-                userInfos:res,
+                userInfo:res,
                 
             });
         })

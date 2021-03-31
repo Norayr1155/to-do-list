@@ -18,6 +18,7 @@ function NavMenu({ isAuthenticated ,getUserInfo,userInfo}){
   
 
     return(
+      <>
         <Navbar bg="dark" variant="dark">
         <Nav className={`${styles.navBar} `}>
 
@@ -47,49 +48,55 @@ function NavMenu({ isAuthenticated ,getUserInfo,userInfo}){
          to='/contact'
          activeClassName={styles.active}
          exact
-         className='mr-1'
          >
          Contact us
          </NavLink>
          
 
         {
-          isAuthenticated && userInfo?
+          isAuthenticated?
           
-          <>
+          <div className={styles.logout}>
             <Button 
             variant='link'
             onClick={logout}
             >
             Log out 
             </Button> 
-            <div className={styles.userInformation}>
-            {userInfo.name} {userInfo.surname} 
-            </div>
-          </>:
-          
+          </div>
+          :
           <>
-          <NavLink
-          to='/login'
-          activeClassName={styles.active}
-          exact
-          className='mr-3 ml-3'
-          >
-          Login
-          </NavLink>
+            <NavLink
+            to='/login'
+            activeClassName={styles.active}
+            exact
+            className='mr-3 ml-3'
+            >
+            Login
+            </NavLink>
 
-          <NavLink
-          to='/registration'
-          activeClassName={styles.active}
-          exact
-          >
-          Register
-          </NavLink>
+            <NavLink
+            to='/registration'
+            activeClassName={styles.active}
+            exact
+            >
+            Register
+            </NavLink>
           </>
         }
 
         </Nav>
+
       </Navbar>
+
+      {
+        isAuthenticated && userInfo?
+        <div className={styles.userInformation}>
+          {userInfo.name} {userInfo.surname} 
+        </div>:
+        null
+      }
+      </>
     );
 
 }; 
