@@ -7,10 +7,14 @@ export default function Footer(){
 
     return(
         <div className={styles.footer} >
-                        <h5>Powered by Norayr Hovhannisyan</h5>
+            <h5>Powered by Norayr Hovhannisyan</h5>
 
          <div>   
-            <a href='https://github.com/Norayr1155/to-do-list'>
+            <a 
+            href='https://github.com/Norayr1155/to-do-list' 
+            target="_blank"
+            rel="noreferrer"
+            >
                 <img 
                     src={gitHubLogo}
                     alt='gitHubLogo'
@@ -19,13 +23,16 @@ export default function Footer(){
                     className='mr-2'
                     >
                 </img>
-            access
             </a>
         </div>
 
         <div>   
             
-            <a href='https://www.linkedin.com/in/norayr-hovhannisyan-1394a420a/'>
+            <a 
+            href='https://www.linkedin.com/in/norayr-hovhannisyan-1394a420a/' 
+            target="_blank"
+            rel="noreferrer"
+            >
                 <img 
                     src={linkedinLogo}
                     alt='linkedinLogo'
@@ -34,7 +41,6 @@ export default function Footer(){
                     className='mr-2'
                     >
                 </img>
-            access
             </a>
         </div>
 

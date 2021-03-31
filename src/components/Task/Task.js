@@ -55,14 +55,6 @@ class Task extends PureComponent{
                         <Card.Text>   
                         Date: {formatDate(taskObject.date)}
                         </Card.Text>
-                        <Button 
-                        variant="success"
-                        onClick={()=>onEdit(taskObject)}
-                        disabled={disabled}
-                        className='mr-2'
-                        >
-                        <FontAwesomeIcon icon={faEdit} />
-                        </Button>
                         
                         <Button 
                         className='mr-2'
@@ -71,6 +63,15 @@ class Task extends PureComponent{
                         disabled={disabled}
                         >
                         <FontAwesomeIcon icon={faTrash} />
+                        </Button>
+
+                        <Button 
+                        variant="success"
+                        onClick={()=>onEdit(taskObject)}
+                        disabled={disabled}
+                        className='mr-2'
+                        >
+                        <FontAwesomeIcon icon={faEdit} />
                         </Button>
 
                         {

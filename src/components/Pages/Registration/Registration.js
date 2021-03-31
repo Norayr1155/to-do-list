@@ -87,6 +87,11 @@ function Registration(props){
         const valuesArr = Object.values(values);
         const valuesExist = !valuesArr.some(el => el==='');
 
+        if(valuesExist && !erorsExist){
+
+            props.register(values); 
+        }  
+
         if(!valuesExist && !erorsExist){ 
             setErrors({
                 name: requiredErrorMessage,
@@ -97,7 +102,6 @@ function Registration(props){
             });
         }
 
-        props.register(values);
     }
 
     function handleKeyDown (event){
@@ -107,7 +111,7 @@ function Registration(props){
     };
 
     return (
-        <>
+        <div className={styles.formContainer}>
             <h1 className={styles.title}>Register</h1>
             <div className={styles.formBody}>
 
@@ -202,7 +206,7 @@ function Registration(props){
                 </Form>
 
             </div>
-        </>
+        </div>
     );
 }; 
 

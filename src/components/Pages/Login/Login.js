@@ -62,6 +62,11 @@ function Login(props){
         const valuesArr = Object.values(values);
         const valuesExist = !valuesArr.some(el => el==='');
 
+        if(valuesExist && !erorsExist){
+
+            props.login(values); 
+        }  
+
         if(!valuesExist && !erorsExist){ 
             setErrors({
                 email: requiredErrorMessage,
@@ -69,7 +74,6 @@ function Login(props){
             });
         }
 
-        props.login(values);
     }
     
     function handleKeyDown (event){
@@ -79,7 +83,7 @@ function Login(props){
     };
 
     return (
-        <>
+        <div className={styles.formContainer}>
             <h1 className={styles.title}>Log in</h1>
             <div className={styles.formBody}>
 
@@ -137,7 +141,7 @@ function Login(props){
                 </Form>
 
             </div>
-        </>
+        </div>
     );
 }; 
 

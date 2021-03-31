@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
+import { InputGroup, Button, FormControl, DropdownButton, Dropdown,Row, Col} from 'react-bootstrap';
 import { textTruncate } from '../../helpers/utils';
 import DatePicker from "react-datepicker";
 import {getTasks} from '../store/actions';
+import styles from './searchStyles.module.css';
 import "react-datepicker/dist/react-datepicker.css";
 
 const statusOptions = [
@@ -190,23 +191,34 @@ function Search({getTasks}) {
                 </InputGroup.Append>
 
             </InputGroup>
+                    <Row className={styles.datePickersRow}>
+                        
 
                     {
                         dateOptions.map((option, index)=>(
-                            <div
-                            className='mb-2'
+                            <Col
+                            xs={12}
+                            sm={6}
+                            md={6}
+                            lg={3}
+                            xl={3}
                             key={index}
                             >
-                            <span width='150px'>{option.label} </span>
-                            <div>
+                                
+                            <span >{option.label} </span>
+                            
                             <DatePicker 
                             selected={dates[option.value]}
                             onChange={(value)=> handleChangeDate(value, option.value)}
+                            className='mt-1'
                             />
-                            </div>
-                            </div>
+                            
+                            
+                            </Col>
                         ))
                     }
+                    
+                    </Row>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import {formatDate} from '../../../helpers/utils';
 import EditTaskModal from '../../EditTaskModal';
 import {getTask,deleteTask,editTask} from '../../store/actions';
 import {connect} from 'react-redux';
+import styles from './singleTaskStyles.module.css';
 
 class SingleTask extends Component{
     state={
@@ -48,7 +49,7 @@ render(){
     const {task,editTask} = this.props;
 
     return(
-     <div className='mt-5'>
+     <div className={`mt-5 ${styles.formContainer}`}>
      <Container >
      <Row >
      <Col xs={12}>

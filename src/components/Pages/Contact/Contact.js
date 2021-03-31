@@ -94,7 +94,7 @@ useEffect(()=>{
 
 
 return (
-        <>
+        <div className={styles.formContainer}>
             <h1 className={styles.title}>Contact Page</h1>
             <div className={styles.formBody}>
 
@@ -153,7 +153,7 @@ return (
                 </Form>
 
             </div>
-        </>
+        </div>
     );
 };   
 

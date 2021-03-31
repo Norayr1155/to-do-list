@@ -190,8 +190,8 @@ export function getUserInfo() {
             if(!res)  return;
             dispatch({ 
                 type: actionTypes.GET_USER_INFO,
-                name:res.name,
-                surname:res.surname
+                userInfo:res,
+                
             });
         })
         .catch((err) => {

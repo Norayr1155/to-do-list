@@ -7,15 +7,18 @@ import {logout} from '../../helpers/auth';
 import {getUserInfo} from '../store/actions';
 
 
-function NavMenu({ isAuthenticated ,getUserInfo,name,surname}){
+function NavMenu({ isAuthenticated ,getUserInfo,userInfo}){
+
 
   useEffect(()=>{
     if(isAuthenticated){
       getUserInfo()
     }
   },[getUserInfo,isAuthenticated]);
+  
 
     return(
+      <>
         <Navbar bg="dark" variant="dark">
         <Nav className={`${styles.navBar} `}>
 
@@ -45,57 +48,66 @@ function NavMenu({ isAuthenticated ,getUserInfo,name,surname}){
          to='/contact'
          activeClassName={styles.active}
          exact
-         className='mr-1'
          >
          Contact us
          </NavLink>
          
 
         {
-          isAuthenticated ? 
+          isAuthenticated?
           
-          <>
+          <div className={styles.logout}>
             <Button 
             variant='link'
             onClick={logout}
             >
             Log out 
             </Button> 
-            <div className={styles.userInfo}>
-            {name} {surname}
-            </div>
-          </>:
-          
+          </div>
+          :
           <>
-          <NavLink
-          to='/login'
-          activeClassName={styles.active}
-          exact
-          className='mr-3 ml-3'
-          >
-          Login
-          </NavLink>
+            <NavLink
+            to='/login'
+            activeClassName={styles.active}
+            exact
+            className='mr-3 ml-3'
+            >
+            Login
+            </NavLink>
 
-          <NavLink
-          to='/registration'
-          activeClassName={styles.active}
-          exact
-          >
-          Register
-          </NavLink>
+            <NavLink
+            to='/registration'
+            activeClassName={styles.active}
+            exact
+            >
+            Register
+            </NavLink>
           </>
         }
 
         </Nav>
+
       </Navbar>
+
+      {
+        isAuthenticated && userInfo?
+        <div className={styles.userInformation}>
+          {userInfo.name} {userInfo.surname} 
+        </div>:
+        null
+      }
+      </>
     );
+
 }; 
+
+
 
 const mapStateToProps = (state)=>{
   return {
     isAuthenticated: state.isAuthenticated,
-    name:state.name,
-    surname:state.surname
+    userInfo:state.userInfo
+    
   }
 };
 
